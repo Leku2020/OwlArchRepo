@@ -36,9 +36,6 @@ jobs:
         with:
           name: packages
           path: '**/*.pkg.tar.zst'
-          git add '**/*.pkg.tar.zst'
-          git commit -m "Add compiled .pkg.tar.zst packages"
-          git push origin main
           
     - name: Upload packages to GitHub Pages directory
         run: |
