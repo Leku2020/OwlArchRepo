@@ -17,14 +17,16 @@ jobs:
       - name: Build PKGBUILD in Arch Linux Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
-            pacman -Sy --noconfirm base-devel git &&  
-            find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
-              dir=\$(dirname \$PKGBUILD)
-              echo \"Building package in \$dir\"
-              cd \$dir && makepkg -si --noconfirm && cd -
-            done
-          "
-
+            useradd -m builder && echo 'builder:password' | chpasswd && \
+            su - builder -c '
+              pacman -Sy --noconfirm base-devel git &&  
+              find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
+                dir=\$(dirname \$PKGBUILD)
+                echo \"Building package in \$dir\"
+                cd \$dir && makepkg -si --noconfirm && cd -
+              done
+            '"
+          
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
         with:
