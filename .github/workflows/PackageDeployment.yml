@@ -18,8 +18,10 @@ jobs:
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
             useradd -m builder && echo 'builder:password' | chpasswd && \
+            pacman -Sy --noconfirm sudo && \
+            echo 'builder ALL=(ALL) NOPASSWD: /usr/bin/pacman' >> /etc/sudoers && \
             su - builder -c '
-              pacman -Sy --noconfirm base-devel git &&  
+              sudo pacman -Sy --noconfirm base-devel git &&  
               find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
                 dir=\$(dirname \$PKGBUILD)
                 echo \"Building package in \$dir\"
