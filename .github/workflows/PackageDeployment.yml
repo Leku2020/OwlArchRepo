@@ -37,7 +37,7 @@ jobs:
           name: packages
           path: '**/*.pkg.tar.zst'
           
-    - name: Upload packages to GitHub Pages directory
+      - name: Upload packages to GitHub Pages directory
         run: |
           mkdir -p ./pkgs/x86_64
           cp $(find . -type f -name "*.pkg.tar.xz") ./pkgs/x86_64/
