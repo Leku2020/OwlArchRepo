@@ -8,30 +8,28 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Usamos un runner de Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install dependencies for Arch Linux build
+      - name: Set up Docker
         run: |
-          sudo apt update
-          sudo apt install -y wget curl git
-          sudo apt install -y pacman
-          sudo pacman -Sy --noconfirm base-devel
-          sudo pacman -Sy --noconfirm git
+          sudo apt-get update
+          sudo apt-get install -y docker.io 
 
-      - name: Build PKGBUILD
+      - name: Build PKGBUILD in Arch Linux Docker container
         run: |
-          for dir in */; do
-            if [[ -f "$dir/PKGBUILD" ]]; then
-              echo "Building package in $dir"
-              cd "$dir"
-              makepkg -si --noconfirm 
-              cd ..
-            fi
-          done
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux/base /bin/bash -c "
+            pacman -Sy --noconfirm base-devel git &&  
+            for dir in */; do
+              if [[ -f \"\$dir/PKGBUILD\" ]]; then
+                echo \"Building package in \$dir\"
+                cd \"\$dir\" && makepkg -si --noconfirm && cd ..
+              fi
+            done
+          "
 
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
