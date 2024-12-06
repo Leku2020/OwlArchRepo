@@ -33,6 +33,7 @@ prepare() {
 
 package() {
   install -dm0755 "$pkgdir/opt"
+  ls
   cp -a brave "$pkgdir/opt/$pkgname"
   ls -R "$pkgdir/opt"
   # allow firejail users to get the suid sandbox working
