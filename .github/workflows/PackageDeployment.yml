@@ -30,7 +30,7 @@ jobs:
                 cd \$dir && makepkg -si --noconfirm && cd -
               done
             '
-            echo "List workspace files:"
+            echo 'List workspace files:'
             ls -R
             "
             
