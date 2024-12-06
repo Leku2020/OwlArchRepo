@@ -21,10 +21,10 @@ jobs:
             useradd -m builder && echo 'builder:password' | chpasswd && \
             pacman -Sy --noconfirm base-devel git && \
             chown -R builder:builder /workspace && \
+            pacman -Sy --noconfirm alsa-lib gtk3 libxss nss ttf-font && \            
             su - builder -c '
-              # Install dependencies without sudo, directly as builder
-              pacman -Sy --noconfirm alsa-lib gtk3 libxss nss ttf-font && \
-              mkdir -p /home/builder/packages && \
+              # Crear carpeta para los paquetes
+              mkdir -p /home/builder/packages && 
               find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
                 dir=\$(dirname \$PKGBUILD)
                 echo \"Building package in \$dir\"
