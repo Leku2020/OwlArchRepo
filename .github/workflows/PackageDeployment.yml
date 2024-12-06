@@ -48,7 +48,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Leku2020/owlArchRepo.git
+          git remote set-url origin https://x-access-token:${{ secrets.DEPLOYING }}@github.com/Leku2020/owlArchRepo.git
           git add '**/*.pkg.tar.zst'
           git commit -m "Add compiled .pkg.tar.zst packages"
           git push origin main
