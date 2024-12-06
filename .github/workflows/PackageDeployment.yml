@@ -46,6 +46,7 @@ jobs:
           
       - name: Commit new packages to repository
         run: |
+          echo secrets.TEST
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.DEPLOYING }}@github.com/Leku2020/owlArchRepo.git
