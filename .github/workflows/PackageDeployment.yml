@@ -18,21 +18,19 @@ jobs:
       - name: Build PKGBUILD in Arch Linux Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
-            useradd -m builder || true && \
-            echo 'builder:password' | chpasswd && \
-            pacman -Sy --noconfirm base-devel && \
+            useradd -m builder && echo 'builder:password' | chpasswd && \
+            pacman -Sy --noconfirm sudo && \
+            echo 'builder ALL=(ALL) NOPASSWD: /usr/bin/pacman' >> /etc/sudoers && \
+            pacman -Sy --noconfirm base-devel git && \
             chown -R builder:builder /workspace && \
-            
             su - builder -c '
-              # Crear carpeta para los paquetes
-              mkdir -p /home/builder/packages && 
               find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
                 dir=\$(dirname \$PKGBUILD)
                 echo \"Building package in \$dir\"
-                export PKGDEST=/home/builder/packages
-                cd \$dir && makepkg --noconfirm --skipinteg && cd -
+                cd \$dir && makepkg -si --noconfirm && cd -
               done
             '"
+            
       - name: Check generated package files
         run: |
           echo "Listing generated package files:"
