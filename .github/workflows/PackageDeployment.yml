@@ -14,18 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Docker dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget curl git
-          sudo apt-get remove -y containerd
-          # Instalamos Docker y sus dependencias necesarias
-          sudo apt-get install -y docker.io
-
-      - name: Set up Docker
-        run: |
-          sudo systemctl enable --now docker  
-
       - name: Build PKGBUILD in Arch Linux Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux/base /bin/bash -c "
