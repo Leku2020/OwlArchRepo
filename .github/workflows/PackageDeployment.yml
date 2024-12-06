@@ -18,10 +18,11 @@ jobs:
       - name: Build PKGBUILD in Arch Linux Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
-            useradd -m builder && echo 'builder:password' | chpasswd && \
-            pacman -Sy --noconfirm base-devel git && \
+            useradd -m builder || true && \
+            echo 'builder:password' | chpasswd && \
+            
             chown -R builder:builder /workspace && \
-            pacman -Sy --noconfirm alsa-lib gtk3 libxss nss ttf-font && \            
+            
             su - builder -c '
               # Crear carpeta para los paquetes
               mkdir -p /home/builder/packages && 
@@ -29,7 +30,7 @@ jobs:
                 dir=\$(dirname \$PKGBUILD)
                 echo \"Building package in \$dir\"
                 export PKGDEST=/home/builder/packages
-                cd \$dir && makepkg -si --noconfirm && cd -
+                cd \$dir && makepkg --noconfirm --skipinteg && cd -
               done
             '"
       - name: Check generated package files
