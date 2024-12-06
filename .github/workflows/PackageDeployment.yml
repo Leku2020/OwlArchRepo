@@ -39,3 +39,26 @@ jobs:
           git add '**/*.pkg.tar.zst'
           git commit -m "Add compiled .pkg.tar.zst packages"
           git push origin main
+          
+    - name: Upload packages to GitHub Pages directory
+        run: |
+          mkdir -p ./pkgs/x86_64
+          cp $(find . -type f -name "*.pkg.tar.xz") ./pkgs/x86_64/
+          ls ./pkgs/x86_64 # Verify files are copied correctly
+          
+      - name: Commit and push the updated pkgs/x86_64 directory
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "GitHub Actions"
+          author_email: "github-actions@github.com"
+          message: "Publish new packages to GitHub Pages"
+          add: 'pkgs/x86_64/*'
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://github.com/Leku2020/owlArchRepo.git
+          git add .
+          git commit -m "Deploy updated packages"
+          git push origin main
