@@ -29,10 +29,7 @@ jobs:
                 echo \"Building package in \$dir\"
                 cd \$dir && makepkg -si --noconfirm && cd -
               done
-            '
-            echo 'List workspace files:'
-            ls -R
-            "
+            '"
     
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
@@ -46,7 +43,7 @@ jobs:
           
       - name: Commit new packages to repository
         run: |
-          echo secrets.TEST
+          echo ${{ secrets.TEST }}
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.DEPLOYING }}@github.com/Leku2020/owlArchRepo.git
