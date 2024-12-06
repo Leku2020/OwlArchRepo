@@ -34,7 +34,7 @@ jobs:
       - name: Check generated package files
         run: |
           echo "Listing generated package files:"
-          ls /home/builder/packages
+          ls -R /home/builder
           
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
