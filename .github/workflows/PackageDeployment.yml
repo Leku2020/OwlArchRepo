@@ -33,7 +33,7 @@ jobs:
       - name: Check generated files
         run: |
           echo "Listing generated package files:"
-          find /workspace -type f -name "*.pkg.tar.xz"
+          find / -type f -name "*.pkg.tar.xz"
           
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
