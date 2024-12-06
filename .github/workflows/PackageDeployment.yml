@@ -33,22 +33,17 @@ jobs:
             echo 'List workspace files:'
             ls -R
             "
-            
-      - name: Check generated package files
-        run: |
-          echo "Listing generated package files:"
-          ls -R /home/builder
-          
+    
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
         with:
           name: packages
-          path: '/home/builder/packages/*.pkg.tar.xz'
+          path: '**/*.pkg.tar.zst'
 
       - name: Commit new packages to repository
         uses: EndBug/add-and-commit@v9
         with:
           author_name: "GitHub Actions"
           author_email: "github-actions@github.com"
-          message: "Add compiled .pkg.tar.xz packages"
-          add: '/home/builder/packages/*.pkg.tar.xz'
+          message: "Add compiled .pkg.tar.zst packages"
+          add: '**/*.pkg.tar.zst'
