@@ -45,9 +45,10 @@ jobs:
           sudo chown -R $USER:$USER .git
           
       - name: Commit new packages to repository
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "GitHub Actions"
-          author_email: "github-actions@github.com"
-          message: "Add compiled .pkg.tar.zst packages"
-          add: '**/*.pkg.tar.zst'
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Leku2020/owlArchRepo.git
+          git add '**/*.pkg.tar.zst'
+          git commit -m "Add compiled .pkg.tar.zst packages"
+          git push origin main
