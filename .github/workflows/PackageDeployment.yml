@@ -20,7 +20,7 @@ jobs:
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
             useradd -m builder || true && \
             echo 'builder:password' | chpasswd && \
-            
+            pacman -Sy --noconfirm base-devel && \
             chown -R builder:builder /workspace && \
             
             su - builder -c '
