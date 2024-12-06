@@ -29,6 +29,11 @@ jobs:
                 cd \$dir && makepkg -si --noconfirm && cd -
               done
             '"
+
+      - name: Check generated files
+        run: |
+          echo "Listing generated package files:"
+          ls /workspace/**/*.pkg.tar.xz
           
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
