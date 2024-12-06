@@ -1,4 +1,4 @@
-name: Build pakages
+name: Build PKGBUILDs
 
 on:
   push:
@@ -9,15 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up base development environment
         run: |
-          sudo pacman -Sy --noconfirm base-devel git
-          sudo pacman -Sy --noconfirm makepkg 
+          sudo apt update
+          sudo apt install -y base-devel git 
+          sudo apt install -y pacman
 
       - name: Build PKGBUILD
         run: |
