@@ -39,6 +39,7 @@ jobs:
           
       - name: Upload packages to GitHub Pages directory
         run: |
+          whoami
           mkdir -p $GITHUB_WORKSPACE/pkgs/x86_64
           cp $(find . -type f -name "*.pkg.tar.xz") $GITHUB_WORKSPACE/pkgs/x86_64/
           ls $GITHUB_WORKSPACE/pkgs/x86_64
