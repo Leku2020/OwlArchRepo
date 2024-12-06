@@ -8,16 +8,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Usamos un runner de Ubuntu
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up base development environment
+      - name: Install dependencies for Arch Linux build
         run: |
           sudo apt update
-          sudo apt install -y base-devel git 
+          sudo apt install -y wget curl git
           sudo apt install -y pacman
+          sudo pacman -Sy --noconfirm base-devel
+          sudo pacman -Sy --noconfirm git
 
       - name: Build PKGBUILD
         run: |
@@ -25,7 +28,7 @@ jobs:
             if [[ -f "$dir/PKGBUILD" ]]; then
               echo "Building package in $dir"
               cd "$dir"
-              makepkg -si --noconfirm
+              makepkg -si --noconfirm 
               cd ..
             fi
           done
