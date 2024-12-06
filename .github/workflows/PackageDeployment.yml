@@ -29,7 +29,10 @@ jobs:
                 echo \"Building package in \$dir\"
                 cd \$dir && makepkg -si --noconfirm && cd -
               done
-            '"
+            '
+            ls -R /workspace
+            "
+            
 
   # Job 2.1: Despliegue del artefacto en GitHub
   deploy_artifact:
