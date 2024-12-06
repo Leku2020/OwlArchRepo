@@ -1,1 +1,45 @@
+name: Build pakages
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: archlinux-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up base development environment
+        run: |
+          sudo pacman -Sy --noconfirm base-devel git
+          sudo pacman -Sy --noconfirm makepkg 
+
+      - name: Build PKGBUILD
+        run: |
+          for dir in */; do
+            if [[ -f "$dir/PKGBUILD" ]]; then
+              echo "Building package in $dir"
+              cd "$dir"
+              makepkg -si --noconfirm
+              cd ..
+            fi
+          done
+
+      - name: Upload packages to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: packages
+          path: '**/*.pkg.tar.xz'
+
+      - name: Commit new packages to repository
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "GitHub Actions"
+          author_email: "github-actions@github.com"
+          message: "Add compiled .pkg.tar.xz packages"
+          add: '**/*.pkg.tar.xz'
