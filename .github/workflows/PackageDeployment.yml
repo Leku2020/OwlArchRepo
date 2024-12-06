@@ -6,6 +6,7 @@ on:
       - main
   workflow_dispatch:
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,30 +18,27 @@ jobs:
       - name: Build PKGBUILD in Arch Linux Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
+            useradd -m builder && echo 'builder:password' | chpasswd && \
             pacman -Sy --noconfirm sudo base-devel git && \
-            chown -R root:root /workspace && \
-            find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
-              dir=\$(dirname \$PKGBUILD)
-              echo \"Building package in \$dir\"
-              cd \$dir && makepkg -si --noconfirm && cd -
-            done
-          "
-
-      - name: Check generated files
+            chown -R builder:builder /workspace && \
+            su - builder -c '
+              mkdir -p /home/builder/packages
+              find /workspace -type f -name PKGBUILD | while read PKGBUILD; do
+                dir=\$(dirname \$PKGBUILD)
+                echo \"Building package in \$dir\"
+                cd \$dir && makepkg -si --noconfirm --pkgdir=/home/builder/packages && cd -
+              done
+            '"
+      - name: Check generated package files
         run: |
           echo "Listing generated package files:"
-          ls /workspace
-          find /workspace -type f -name "*.pkg.tar.xz"
+          ls /home/builder/packages
           
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v3
         with:
           name: packages
-          path: '**/*.pkg.tar.xz'
-
-      - name: Change permissions on .git directory
-        run: |
-          sudo chown -R $USER:$USER .git
+          path: '/home/builder/packages/*.pkg.tar.xz'
 
       - name: Commit new packages to repository
         uses: EndBug/add-and-commit@v9
@@ -48,4 +46,4 @@ jobs:
           author_name: "GitHub Actions"
           author_email: "github-actions@github.com"
           message: "Add compiled .pkg.tar.xz packages"
-          add: '**/*.pkg.tar.xz'
+          add: '/home/builder/packages/*.pkg.tar.xz'
