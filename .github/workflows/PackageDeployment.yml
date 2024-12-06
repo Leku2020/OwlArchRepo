@@ -6,7 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +19,6 @@ jobs:
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
             useradd -m builder && echo 'builder:password' | chpasswd && \
             pacman -Sy --noconfirm sudo && \
-            echo 'builder ALL=(ALL) NOPASSWD: /usr/bin/pacman' >> /etc/sudoers && \
             pacman -Sy --noconfirm base-devel git && \
             chown -R builder:builder /workspace && \
             su - builder -c '
@@ -30,20 +28,35 @@ jobs:
                 cd \$dir && makepkg -si --noconfirm && cd -
               done
             '"
-    
+
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v4
         with:
           name: packages
           path: '**/*.pkg.tar.zst'
+
+  deploy_artifact:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download packages from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: packages
+          path: './packages'
           
       - name: Upload packages to GitHub Pages directory
         run: |
-          whoami
+          echo "Creating pkgs/x86_64 directory"
           mkdir -p $GITHUB_WORKSPACE/pkgs/x86_64
-          cp $(find . -type f -name "*.pkg.tar.xz") $GITHUB_WORKSPACE/pkgs/x86_64/
+          echo "Copying packages to pkgs/x86_64"
+          cp ./packages/*.pkg.tar.zst $GITHUB_WORKSPACE/pkgs/x86_64/
           ls $GITHUB_WORKSPACE/pkgs/x86_64
-          
+
       - name: Commit and push the updated pkgs/x86_64 directory
         uses: EndBug/add-and-commit@v9
         with:
@@ -51,6 +64,15 @@ jobs:
           author_email: "github-actions@github.com"
           message: "Publish new packages to GitHub Pages"
           add: 'pkgs/x86_64/*'
+
+  # Job 2.2: Despliegue en GitHub Pages
+  deploy_pages:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Deploy to GitHub Pages
         run: |
