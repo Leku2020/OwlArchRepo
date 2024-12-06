@@ -34,7 +34,7 @@ prepare() {
 package() {
   install -dm0755 "$pkgdir/opt"
   cp -a brave "$pkgdir/opt/$pkgname"
-  ls "$pkgdir/opt"
+  ls -R "$pkgdir/opt"
   # allow firejail users to get the suid sandbox working
   chmod 4755 "$pkgdir/opt/brave-bin/chrome-sandbox"
 
