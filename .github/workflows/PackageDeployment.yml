@@ -56,7 +56,7 @@ jobs:
           echo "Creating pkgs/x86_64 directory"
           mkdir -p $GITHUB_WORKSPACE/pkgs/x86_64
           echo "Copying packages to pkgs/x86_64"
-          cp $(find . -type f -name "*.pkg.tar.zst") $GITHUB_WORKSPACE/pkgs/x86_64/
+          find . -type f -name "*.pkg.tar.zst" -exec cp {} $GITHUB_WORKSPACE/pkgs/x86_64/ \;
           ls $GITHUB_WORKSPACE/pkgs/x86_64  # Verifica que los paquetes están copiados
 
       - name: Commit and push the updated pkgs/x86_64 directory
