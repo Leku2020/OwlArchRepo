@@ -39,9 +39,9 @@ jobs:
           
       - name: Upload packages to GitHub Pages directory
         run: |
-          mkdir -p ./pkgs/x86_64
-          cp $(find . -type f -name "*.pkg.tar.xz") ./pkgs/x86_64/
-          ls ./pkgs/x86_64 # Verify files are copied correctly
+          mkdir -p $GITHUB_WORKSPACE/pkgs/x86_64
+          cp $(find . -type f -name "*.pkg.tar.xz") $GITHUB_WORKSPACE/pkgs/x86_64/
+          ls $GITHUB_WORKSPACE/pkgs/x86_64
           
       - name: Commit and push the updated pkgs/x86_64 directory
         uses: EndBug/add-and-commit@v9
