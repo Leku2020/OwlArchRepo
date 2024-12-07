@@ -47,5 +47,13 @@ package() {
 		install -Dm0644 "lib/$pkgname/product_logo_${size/x*/}.png" \
 			"share/icons/hicolor/$size/apps/brave-desktop.png"
 	done
- 	cp "$pkgdir/usr/lib/$pkgname/Bookmarks" ~/.config/BraveSoftware/Brave-Browser/Default/Bookmarks
+ 	
+}
+post_install() {
+  echo "Copying bookmarks to Brave config"
+  cp "$srcdir/Bookmarks" "$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks"
+}
+
+post_upgrade() {
+  post_install
 }
