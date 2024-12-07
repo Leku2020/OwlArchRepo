@@ -42,6 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Set up Git LFS
+        run: |
+          git lfs install
+          git lfs pull
       - name: Checkout repository
         uses: actions/checkout@v3
         
@@ -54,7 +58,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/pkgs/x86_64
           echo "Copying packages to pkgs/x86_64"
           find . -type f -name "*.pkg.tar.zst" -exec cp {} $GITHUB_WORKSPACE/pkgs/x86_64/ \;
-          ls $GITHUB_WORKSPACE/pkgs/x86_64  # Verifica que los paquetes están copiados
+          ls $GITHUB_WORKSPACE/pkgs/x86_64
 
       - name: Commit and push the updated pkgs/x86_64 directory
         uses: EndBug/add-and-commit@v9
