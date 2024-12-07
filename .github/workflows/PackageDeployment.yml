@@ -65,7 +65,11 @@ jobs:
             echo "Copying: $file a $GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
             cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
           done
-          
+      - name: Create repository database using repo-add
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/pkgs/db"
+          cd "$GITHUB_WORKSPACE/pkgs/x86_64"
+          repo-add "$GITHUB_WORKSPACE/pkgs/db/owlArchRepo.db.tar.gz" *.pkg.tar.zst
       - name: Delete /packages directory and its contents
         run: |
           echo "Deleting /packages and its contents"
