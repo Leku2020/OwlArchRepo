@@ -49,13 +49,6 @@ jobs:
       - name: Download packages from build job
         uses: actions/download-artifact@v4
         
-      - name: Upload packages to GitHub Pages directory
-        run: |
-          echo "Creating pkgs/x86_64/extra/brave directory"
-          mkdir -p $GITHUB_WORKSPACE/pkgs/x86_64/extra/brave
-          echo "Copying brave-browser package to pkgs/x86_64/extra/brave"
-          cp pkgs/extra/brave/brave-browser-1.73.91-1-x86_64.pkg.tar.zst $GITHUB_WORKSPACE/pkgs/x86_64/extra/brave/
-          ls $GITHUB_WORKSPACE/pkgs/x86_64/extra/brave  # Verifica que el paquete está copiado
 
       - name: Set up Git LFS
         run: |
@@ -63,6 +56,15 @@ jobs:
           git lfs track "*.pkg.tar.zst" 
           git add .gitattributes
           git commit -m "Track .pkg.tar.zst files with LFS" || echo "No changes to commit"
+
+      - name: Create folder structure and copy .pkg.tar.zst files
+        run: |
+          find packages -type f -name "*.pkg.tar.zst" | while read file; do
+            relative_path=$(dirname "$file" | sed 's|packages/||')
+            mkdir -p "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path"
+            cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
+            echo "Copying: $file a $GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
+          done
           
       - name: Commit and push the updated pkgs/x86_64 directory
         uses: EndBug/add-and-commit@v9
