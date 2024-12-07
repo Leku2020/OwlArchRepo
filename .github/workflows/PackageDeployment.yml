@@ -71,14 +71,9 @@ jobs:
             pacman -Sy --noconfirm pacman-contrib && \
             mkdir -p /workspace/pkgs/db && \
             cd /workspace/pkgs/x86_64 && \
-            repo-add /workspace/pkgs/db/owlArchRepo.db.tar.gz *.pkg.tar.zst
-          "
+            find . -type f -name '*.pkg.tar.zst' | xargs repo-add /workspace/pkgs/db/owlArchRepo.db.tar.gz
+            "
       
-      - name: Create repository database using repo-add
-        run: |
-          mkdir -p "$GITHUB_WORKSPACE/pkgs/db"
-          cd "$GITHUB_WORKSPACE/pkgs/x86_64"
-          repo-add "$GITHUB_WORKSPACE/pkgs/db/owlArchRepo.db.tar.gz" *.pkg.tar.zst
       - name: Delete /packages directory and its contents
         run: |
           echo "Deleting /packages and its contents"
