@@ -72,4 +72,4 @@ jobs:
           git remote set-url origin https://github.com/Leku2020/owlArchRepo.git
           git add .
           git commit -m "Deploy updated packages"
-          git push https://x-access-token:${{ secrets.DEPLOYING }}@github.com/Leku2020/owlArchRepo.git
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Leku2020/owlArchRepo.git
