@@ -64,8 +64,12 @@ jobs:
             mkdir -p "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path"ç
             echo "Copying: $file a $GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
             cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
-            rm -f $GITHUB_WORKSPACE/packages
           done
+          
+      - name: Delete /packages directory and its contents
+        run: |
+          echo "Deleting /packages and its contents"
+          rm -rf $GITHUB_WORKSPACE/packages    
           
       - name: Commit and push the updated pkgs/x86_64 directory
         uses: EndBug/add-and-commit@v9
