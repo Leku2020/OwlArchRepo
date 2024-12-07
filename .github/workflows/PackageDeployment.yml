@@ -61,7 +61,7 @@ jobs:
         run: |
           find packages -type f -name "*.pkg.tar.zst" | while read file; do
             relative_path=$(dirname "$file" | sed 's|packages/||')
-            mkdir -p "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path"ç
+            mkdir -p "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path"
             echo "Copying: $file a $GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
             cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
           done
