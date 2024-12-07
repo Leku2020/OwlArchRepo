@@ -65,11 +65,14 @@ jobs:
             cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/$relative_path/"
           done
 
-      - name: Install pacman and pacman-contrib in Ubuntu
+      - name: Run repo-add in Arch Linux Docker container
         run: |
-          sudo apt update
-          sudo apt install -y pacman
-          sudo pacman -Sy --noconfirm pacman-contrib
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
+            pacman -Sy --noconfirm pacman-contrib && \
+            mkdir -p /workspace/pkgs/db && \
+            cd /workspace/pkgs/x86_64 && \
+            repo-add /workspace/pkgs/db/owlArchRepo.db.tar.gz *.pkg.tar.zst
+          "
       
       - name: Create repository database using repo-add
         run: |
