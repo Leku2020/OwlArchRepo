@@ -67,20 +67,28 @@ jobs:
 
       - name: Run repo-add in Arch Linux Docker container
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c '
             pacman -Sy --noconfirm pacman-contrib && \
+            echo "Pacman actualizado" && \
+            
             mkdir -p /workspace/pkgs/db && \
+            echo "Directorio /workspace/pkgs/db creado" && \
+            
             cd /workspace/pkgs/x86_64 && \
-            find . -type f -name '*.pkg.tar.zst' | while read pkg; do \
-              # Verificar que el archivo sea un paquete válido \
-              if tar -I zstd -tf \"\$pkg\" &> /dev/null; then \
-                echo \"Adding valid package: \$pkg\" && \
-                repo-add /workspace/pkgs/db/owlArchRepo.db.tar.gz \"\$pkg\"; \
+            echo "Cambiando a directorio /workspace/pkgs/x86_64" && \
+            
+            find . -type f -name "*.pkg.tar.zst" | while read pkg; do \
+              echo "Procesando: $pkg"; \
+              
+              if tar -I zstd -tf "$pkg" &> /dev/null; then \
+                echo "Paquete válido: $pkg"; \
+                # Añadir el paquete a la base de datos
+                repo-add /workspace/pkgs/db/owlArchRepo.db.tar.gz "$pkg" && \
+                echo "Paquete añadido: $pkg"; \
               else \
-                echo \"Skipping invalid package: \$pkg\"; \
+                echo "Saltando paquete inválido: $pkg"; \
               fi \
-            done \
-          "
+            done'
       
       - name: Delete /packages directory and its contents
         run: |
