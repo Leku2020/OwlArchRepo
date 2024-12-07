@@ -59,7 +59,9 @@ jobs:
       - name: Set up Git LFS
         run: |
           git lfs install
-          git lfs pull
+          git lfs track "*.pkg.tar.zst" 
+          git add .gitattributes ç
+          git commit -m "Track .pkg.tar.zst files with LFS" || echo "No changes to commit"
           
       - name: Commit and push the updated pkgs/x86_64 directory
         uses: EndBug/add-and-commit@v9
