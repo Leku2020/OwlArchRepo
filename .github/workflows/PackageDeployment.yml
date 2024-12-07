@@ -71,7 +71,15 @@ jobs:
             pacman -Sy --noconfirm pacman-contrib && \
             mkdir -p /workspace/pkgs/db && \
             cd /workspace/pkgs/x86_64 && \
-            find . -type f -name '*.pkg.tar.zst' | xargs repo-add /workspace/pkgs/db/owlArchRepo.db.tar.gz
+            find . -type f -name '*.pkg.tar.zst' | while read pkg; do
+              # Verificar que el archivo sea un paquete válido
+              if tar -I zstd -tf "$pkg" &> /dev/null; then
+                echo "Adding valid package: $pkg"
+                repo-add "$GITHUB_WORKSPACE/pkgs/db/owlArchRepo.db.tar.gz" "$pkg"
+              else
+                echo "Skipping invalid package: $pkg"
+              fi
+            done            
             "
       
       - name: Delete /packages directory and its contents
