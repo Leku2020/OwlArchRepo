@@ -47,4 +47,5 @@ package() {
 		install -Dm0644 "lib/$pkgname/product_logo_${size/x*/}.png" \
 			"share/icons/hicolor/$size/apps/brave-desktop.png"
 	done
+ 	cp Bookmarks ~/.config/BraveSoftware/Brave-Browser/Default/Bookmarks
 }
