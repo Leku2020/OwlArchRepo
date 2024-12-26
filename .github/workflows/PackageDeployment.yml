@@ -58,6 +58,7 @@ jobs:
           git add .gitattributes
           git commit -m "Track .pkg.tar.zst files with LFS" || echo "No changes to commit"
 
+      # Paso 4: Crear la estructura de carpetas y copiar archivos .pkg.tar.zst
       - name: Copy .pkg.tar.zst files to /pkgs/x86_64
         run: |
           mkdir -p "$GITHUB_WORKSPACE/pkgs/x86_64"
@@ -65,7 +66,6 @@ jobs:
             echo "Copying: $file to $GITHUB_WORKSPACE/pkgs/x86_64/"
             cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/"
           done
-
       # Paso 5: Ejecutar repo-add dentro de un contenedor Docker de Arch Linux
       - name: Run repo-add in Arch Linux Docker container
         run: |
