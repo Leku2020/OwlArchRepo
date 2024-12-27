@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rm -R /owlArchRepo
-cp -R . /
+cp -R /home/osArch/Desktop/owlArch/owlArchRepo /
 docker run --rm -v /owlArchRepo:/workspace:z archlinux:latest /bin/bash -c "
 	    echo 'Base:'
 	    ls -R .
