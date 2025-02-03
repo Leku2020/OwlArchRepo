@@ -42,6 +42,7 @@ jobs:
         run: |
           cd pages
           bundle install  
+          cd ..
 
       - name: Copy markdown files from extra to pages
         run: |
