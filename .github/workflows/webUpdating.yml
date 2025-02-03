@@ -39,8 +39,10 @@ jobs:
           bundler-cache: true
 
       - name: Install Dependencies
-        run: bundle install
-        
+        run: |
+          cd ./pages
+          run: bundle install  
+
       - name: Copy markdown files from extra to pages
         run: |
           find extra -type f -name "*.markdown" -exec sh -c '
