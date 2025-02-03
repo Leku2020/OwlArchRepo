@@ -32,6 +32,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install -y build-essential
+          gem install bundler
+          bundle install
+
       - name: Copy markdown files from extra to pages
         run: |
           find extra -type f -name "*.markdown" -exec sh -c '
@@ -43,10 +49,7 @@ jobs:
           ' sh {} +
 
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./pages
-          destination: ./_site
+        run: bundle exec jekyll build --source ./pages --destination ./_site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
