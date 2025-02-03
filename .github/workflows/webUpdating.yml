@@ -32,13 +32,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get install -y build-essential
-          gem install bundler
-          bundle config set --local path 'vendor/bundle'
-          bundle install
+      - name: Install Ruby and Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
 
+      - name: Install Dependencies
+        run: bundle install
+        
       - name: Copy markdown files from extra to pages
         run: |
           find extra -type f -name "*.markdown" -exec sh -c '
