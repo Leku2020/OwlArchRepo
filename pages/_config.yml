@@ -23,7 +23,7 @@ title: OwlArch repository.
 description: >- # this means to ignore newlines until "baseurl:"
   The place where OwlArch´s packages are stored
 domain: "leku2020.github.io"
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://leku2020.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: Leku2020
 

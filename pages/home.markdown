@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: software
 title: Home
-permalink: /
+permalink: /home
 ---
 
 # Repositorio de Paquetes para la Distribución OwlArch
