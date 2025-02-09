@@ -1,0 +1,31 @@
+pkgbase = ghidra
+	pkgdesc = Software reverse engineering framework
+	pkgver = 11.0.3
+	pkgrel = 1
+	url = https://ghidra-sre.org/
+	arch = x86_64
+	license = Apache-2.0
+	makedepends = git
+	makedepends = gradle
+	makedepends = unzip
+	makedepends = java-environment=17
+	depends = java-environment>=17
+	depends = bash
+	optdepends = pam: GhidraServer support
+	noextract = AXMLPrinter2.jar
+	noextract = yajsw-beta-13.09.zip
+	options = !strip
+	source = https://github.com/NationalSecurityAgency/ghidra/archive/Ghidra_11.0.3_build.tar.gz
+	source = git+https://github.com/NationalSecurityAgency/ghidra-data#tag=Ghidra_11.0.3
+	source = https://github.com/pxb1988/dex2jar/releases/download/v2.1/dex2jar-2.1.zip
+	source = https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/android4me/AXMLPrinter2.jar
+	source = https://sourceforge.net/projects/yajsw/files/yajsw/yajsw-stable-13.09/yajsw-stable-13.09.zip
+	source = https://github.com/NationalSecurityAgency/ghidra-data/raw/Ghidra_11.0.3/lib/java-sarif-2.1-modified.jar
+	sha512sums = 4805c0508c2781f3b05697aa7930b044241d749341b2ba5087d50ff0839d08052c8d526f9898215fa35666721cbdbd0f63400966587d32e2b0d1a91c5b97c213
+	sha512sums = cf8a52af6d8c932ef00e73be5d58f9d5cd3cfa79928ddf1c37ced5ad9f8b49452e447be4928d469ee25a6cdfc1a36efb07bf74d0483450ed4d5474864a0751aa
+	sha512sums = 44b4a51043ef608158e16f70d9a448ae0a37896da19bd9837e1124e197b7b41a7c37f074386b0cc03edd4f385066bf5ef04c553f6dec0b0cc2a11ecbf299b16f
+	sha512sums = c1168ec913f1fbb0675915d4fd865ec9a8e8573f6c8aedcb6e68166f61f11aeaececc7548d54d78134843c0102c57d6350973f6d3027d0ffdae52a5c57a7f601
+	sha512sums = d8682b57ce7577374a17113e1ace77393397e405e6450e3f7637ed1f0f42bc7170b378f775a4ba3c458b202ef35f95b35317cce45659b8a3b25aaa59e8393aa4
+	sha512sums = 04d1f895f87a8f0a653ee5c2b18ed0b6d158f1b7de4e16de2e50ed5a3087b1e83ca01f6c4c8c53d1788942e29d2f41528c910f224c41e27098cb5c2838a8ddf3
+
+pkgname = ghidra
