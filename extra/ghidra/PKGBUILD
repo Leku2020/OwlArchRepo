@@ -2,7 +2,7 @@
 # Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
 
 pkgname=ghidra
-pkgver=11.0.3
+pkgver=11.3
 pkgrel=1
 _d2j=2.1
 _yajsw=13.09
