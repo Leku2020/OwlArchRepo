@@ -1,3 +1,9 @@
+---
+layout: software
+title: Repo
+permalink: /repo/
+---
+
 # Repositorio de Paquetes para la Distribución OwlArch
 
 Este repositorio contiene una colección de paquetes diseñados específicamente para la distribución **OwlArch**, una distribución basada en Arch Linux enfocada a tareas **OSINT** de **Malware**

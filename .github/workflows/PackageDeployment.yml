@@ -51,12 +51,12 @@ jobs:
         uses: actions/download-artifact@v4
 
       # Paso 3: Configurar Git LFS
-      - name: Set up Git LFS
-        run: |
-          git lfs install
-          git lfs track "*.pkg.tar.zst" 
-          git add .gitattributes
-          git commit -m "Track .pkg.tar.zst files with LFS" || echo "No changes to commit"
+      #- name: Set up Git LFS
+       # run: |
+        #  git lfs install
+        #  git lfs track "*.pkg.tar.zst" 
+        #  git add .gitattributes
+        #  git commit -m "Track .pkg.tar.zst files with LFS" || echo "No changes to commit"
 
       # Paso 4: Crear la estructura de carpetas y copiar archivos .pkg.tar.zst
       - name: Copy .pkg.tar.zst files to /pkgs/x86_64
@@ -105,21 +105,32 @@ jobs:
           rm -rf $GITHUB_WORKSPACE/packages    
           
       # Paso 7: Hacer commit y push de la carpeta pkgs/x86_64 actualizada
-      - name: Commit and push the updated pkgs/x86_64 directory
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: "GitHub Actions"
-          author_email: "github-actions@github.com"
-          message: "Publish new packages to GitHub Pages"
-          add: 'pkgs/x86_64/*'
+      #- name: Commit and push the updated pkgs/x86_64 directory
+      #  uses: EndBug/add-and-commit@v9
+      #  with:
+      #    author_name: "GitHub Actions"
+      #    author_email: "github-actions@github.com"
+      #    message: "Publish new packages to GitHub Pages"
+      #    add: 'pkgs/x86_64/*'
 
       # Paso 8: Desplegar a GitHub Pages
+      #- name: Deploy to GitHub Pages
+      #  run: |
+      #    git config --global user.name "GitHub Actions"
+      #    git config --global user.email "github-actions@github.com"
+      #    git remote set-url origin https://github.com/Leku2020/owlArchRepo.git
+      #    git add .
+      #    git commit -m "Deploy updated packages"
+      #    git lfs install
+      #    git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Leku2020/owlArchRepo.git
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
-          git remote set-url origin https://github.com/Leku2020/owlArchRepo.git
-          git add .
-          git commit -m "Deploy updated packages"
-          git lfs install
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Leku2020/owlArchRepo.git
+        id: deployment
+        uses: actions/deploy-pages@v4

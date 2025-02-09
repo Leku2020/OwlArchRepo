@@ -28,13 +28,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      - name: Install Ruby and Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Install Dependencies
+        run: |
+          cd pages
+          bundle install  
+          cd ..
+
+      - name: Copy markdown files from extra to pages
+        run: |
+          find extra -type f -name "*.markdown" -exec sh -c '
+            for file; do
+              dest="pages/${file#extra/}"
+              mkdir -p "$(dirname "$dest")"
+              cp "$file" "$dest"
+            done
+          ' sh {} +
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./pages
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
