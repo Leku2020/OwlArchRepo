@@ -1,5 +1,0 @@
-[ghidra]
-source = "git"
-git = "https://github.com/NationalSecurityAgency/ghidra.git"
-from_pattern = "Ghidra_(.+)_build"
-to_pattern = "\\1"
