@@ -8,7 +8,7 @@ arch=('any')
 url="https://ghidra-sre.org/"
 license=('Apache')
 groups=()
-depends=('jdk-openjdk>=11' 'jre-openjdk>=11')
+depends=('jdk-openjdk>=11')
 makedepends=()
 checkdepends=()
 optdepends=()
