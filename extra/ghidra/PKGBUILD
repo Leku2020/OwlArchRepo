@@ -5,14 +5,14 @@ pkgname=ghidra
 pkgver=11.3
 pkgrel=1
 _d2j=2.1
-_yajsw=13.09
+_yajsw=13.12
 _jserif=2.1
 pkgdesc='Software reverse engineering framework'
 url='https://ghidra-sre.org/'
 arch=('x86_64')
 license=('Apache-2.0')
-depends=('java-environment>=17' 'bash')
-makedepends=('git' 'gradle' 'unzip' 'java-environment=17')
+depends=('java-environment>=23' 'bash' 'python>=3.13')
+makedepends=('git' 'gradle' 'unzip' 'java-environment=23' 'python-pip' 'python-virtualenv')
 optdepends=('pam: GhidraServer support')
 options=('!strip')
 source=(
@@ -25,15 +25,15 @@ source=(
 )
 noextract=(AXMLPrinter2.jar
            yajsw-beta-${_yajsw}.zip)
-sha512sums=('73b42cec587f370bfef49809ae55d2c7a3db689e8f164a1e7d7b8de295b6359f'
+sha512sums=('acc99f3c5cc15a305f6aa5198e6b8d689e06c468917634ff6d8520d1ecea49551b89422730b9bc68b63d1ed52cd055aec4463953cbdf9f0d430cb398129472c0'
             'cf8a52af6d8c932ef00e73be5d58f9d5cd3cfa79928ddf1c37ced5ad9f8b49452e447be4928d469ee25a6cdfc1a36efb07bf74d0483450ed4d5474864a0751aa'
             '44b4a51043ef608158e16f70d9a448ae0a37896da19bd9837e1124e197b7b41a7c37f074386b0cc03edd4f385066bf5ef04c553f6dec0b0cc2a11ecbf299b16f'
             'c1168ec913f1fbb0675915d4fd865ec9a8e8573f6c8aedcb6e68166f61f11aeaececc7548d54d78134843c0102c57d6350973f6d3027d0ffdae52a5c57a7f601'
-            'd8682b57ce7577374a17113e1ace77393397e405e6450e3f7637ed1f0f42bc7170b378f775a4ba3c458b202ef35f95b35317cce45659b8a3b25aaa59e8393aa4'
-            '04d1f895f87a8f0a653ee5c2b18ed0b6d158f1b7de4e16de2e50ed5a3087b1e83ca01f6c4c8c53d1788942e29d2f41528c910f224c41e27098cb5c2838a8ddf3'
-            )
+            'ce942efe3e4f45280913122dab121b583ce20d9a86369de8148daf100fa2f4695f59acd79087519c5ce6ac65803ffa068607430760b556abb31e60558c0085e9'
+            '04d1f895f87a8f0a653ee5c2b18ed0b6d158f1b7de4e16de2e50ed5a3087b1e83ca01f6c4c8c53d1788942e29d2f41528c910f224c41e27098cb5c2838a8ddf3')
+
 prepare() {
-  export PATH="/usr/lib/jvm/java-17-openjdk/bin:${PATH}"
+  export PATH="/usr/lib/jvm/java-23-openjdk/bin:${PATH}"
   cd ghidra-Ghidra_${pkgver}_build
 
   # Copy needed libraries into flat repo folder
@@ -50,12 +50,17 @@ prepare() {
 
   # Ignore lack of licensing for YAJSW zip, packed FID datasets, and the native binaries
   sed -i '/FileTree tree/a\\t\texclude "yajsw-stable-**.zip"\n\t\texclude "src/main/fidb/**.fidb"\n\t\texclude "os/linux64/**"' gradle/support/ip.gradle
+
+  python -m venv venv
+  source venv/bin/activate
+  pip install --upgrade pip setuptools wheel
 }
 
 build() {
   export GRADLE_HOME="$(pwd)/usr/share/java/gradle/"
   export PATH="$(pwd)/usr/share/java/gradle/bin/:${PATH}"
   cd ghidra-Ghidra_${pkgver}_build
+  source venv/bin/activate
   gradle yajswDevUnpack
   gradle buildNatives_linux_x86_64
   gradle sleighCompile

@@ -1,0 +1,8 @@
+src/*
+pkg/*
+ghidra-data/*
+AXMLPrinter2.jar
+dex2jar-*
+Ghidra_*
+java-sarif-*
+yajsw-stable-*
