@@ -11,7 +11,7 @@ pkgdesc='Software reverse engineering framework'
 url='https://ghidra-sre.org/'
 arch=('x86_64')
 license=('Apache-2.0')
-depends=('java-environment>=23' 'bash' 'python>=3.13')
+depends=('java-environment>=23' 'bash' 'python>=3')
 makedepends=('git' 'gradle' 'unzip' 'java-environment=23' 'python-pip' 'python-virtualenv')
 optdepends=('pam: GhidraServer support')
 options=('!strip')
@@ -51,20 +51,28 @@ prepare() {
   # Ignore lack of licensing for YAJSW zip, packed FID datasets, and the native binaries
   sed -i '/FileTree tree/a\\t\texclude "yajsw-stable-**.zip"\n\t\texclude "src/main/fidb/**.fidb"\n\t\texclude "os/linux64/**"' gradle/support/ip.gradle
 
-  python -m venv venv
-  source venv/bin/activate
+  python3 -m venv build/venv
+  source build/venv/bin/activate
   pip install --upgrade pip setuptools wheel
+  pip install protobuf==3.20.3 psutil==5.9.8 wheel==0.37.1
+  pip install jpype1==1.5.2 comtypes==1.4.1 capstone==5.0.1
 }
 
 build() {
   export GRADLE_HOME="$(pwd)/usr/share/java/gradle/"
   export PATH="$(pwd)/usr/share/java/gradle/bin/:${PATH}"
   cd ghidra-Ghidra_${pkgver}_build
-  source venv/bin/activate
-  gradle yajswDevUnpack
-  gradle buildNatives_linux_x86_64
-  gradle sleighCompile
-  gradle buildGhidra
+  
+  source build/venv/bin/activate
+
+  # Set the PYTHONPATH to use the virtual environment
+  export PYTHONPATH="$(pwd)/build/venv/lib/python3.13/site-packages"
+
+  # Ensure gradle uses the correct Python environment
+  gradle -Dorg.gradle.python.home="$(pwd)/build/venv" yajswDevUnpack
+  gradle -Dorg.gradle.python.home="$(pwd)/build/venv" buildNatives_linux_x86_64
+  gradle -Dorg.gradle.python.home="$(pwd)/build/venv" sleighCompile
+  gradle -Dorg.gradle.python.home="$(pwd)/build/venv" buildGhidra
 }
 
 package() {
