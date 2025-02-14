@@ -31,7 +31,7 @@ jobs:
             useradd -m builder && echo 'builder:password' | chpasswd && \
             pacman -Sy --noconfirm sudo base-devel git && \
             echo 'builder ALL=(ALL) NOPASSWD: /usr/bin/pacman' >> /etc/sudoers && \
-            chown -R builder:builder $GITHUB_WORKSPACE/extra && \
+            chown -R builder:builder $GITHUB_WORKSPACE && \
             su - builder -c '
               find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
                 dir=\$(dirname \$PKGBUILD)
@@ -41,11 +41,12 @@ jobs:
             '"
       - name: Create artifact structure
         run: |
+          su - builder -c '
           mkdir -p $GITHUB_WORKSPACE/output_dir
           find . -type f -name "*.pkg.tar.zst" | while read file; do
             echo "Moving: $file to $GITHUB_WORKSPACE/output_dir/"
             mv "$file" $GITHUB_WORKSPACE/output_dir
-          done
+          done'
 
       # Step 3: Upload packages to GitHub      
       - name: Upload packages to GitHub
