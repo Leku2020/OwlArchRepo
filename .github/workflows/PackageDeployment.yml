@@ -6,16 +6,25 @@ on:
     #  - main
   workflow_dispatch:
 
+
+
 jobs:
-  # Job 1: Compilación
-  build:
+  # PKGBUILDs compilation job
+  build_packages:
     runs-on: ubuntu-latest
-
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Build PKGBUILD in Arch Linux Docker container
+        uses: actions/checkout@v4
+      # Step 2: Generating artifacts from PKGBUILDs
+      # Step description:
+      # 1. Create builder user
+      # 2. Install sudo base-devel and git
+      # 3. Adding builder to sudoers
+      # 4. Change /workspace owner to builder
+      # 5. Getting all de files named PKGBUILD into /workspace
+      # 6. Launching makepkg -si to generate each package
+      - name: Build packages
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
             useradd -m builder && echo 'builder:password' | chpasswd && \
@@ -29,61 +38,111 @@ jobs:
                 cd \$dir && makepkg -si --noconfirm && cd -
               done
             '"
-            
+      - name: Create artifact structure
+        run: |
+          mkdir -p packages
+          find . -type f -name "*.pkg.tar.zst" | while read file; do
+            echo "Moving: $file to packages/"
+            mv "$file" output_dir
+          done
+
+      # Step 3: Upload packages to GitHub      
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v4
         with:
-          name: packages
-          path: '**/*.pkg.tar.zst'
+          name: build_packages_artifact
+          path: ./output_dir
 
-
-  deploy_pages:
+  build_pages:
     runs-on: ubuntu-latest
-    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install Ruby and Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+
+      - name: Install Dependencies
+        run: |
+          cd pages
+          bundle install  
+          cd ..
+
+      - name: Copy markdown files from extra to pages
+        run: |
+          find extra -type f -name "*.markdown" -exec sh -c '
+            for file; do
+              dest="pages/${file#extra/}"
+              mkdir -p "$(dirname "$dest")"
+              cp "$file" "$dest"
+            done
+          ' sh {} +
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./pages
+          destination: ./output_dir
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with: 
+          name: build_pages_artifact
+          path: ./output_dir
+
+  prepare_deploy_artifact:
+    runs-on: ubuntu-latest
+    needs: [build_packages, build_pages]
     steps:
 
-      # Paso 1: Checkout del repositorio
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Paso 2: Descargar paquetes desde el job de build
-      - name: Download packages from build job
+      # Step 2: Download the artifact generated in build_packages into ./build_packages
+      - name: Download build_packages artifact
         uses: actions/download-artifact@v4
+        with:
+          name: build_packages_artifact # Origin artifact name
+          path: ./build_packages  # Downloaded artifact path
 
-      # Paso 3: Configurar Git LFS
-      #- name: Set up Git LFS
-       # run: |
-        #  git lfs install
-        #  git lfs track "*.pkg.tar.zst" 
-        #  git add .gitattributes
-        #  git commit -m "Track .pkg.tar.zst files with LFS" || echo "No changes to commit"
+      # Step 3: Download the artifact generated in build_pages into ./build_pages
+      - name: Download build_pages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_pages_artifact  # Origin artifact name
+          path: ./build_pages  # Downloaded artifact path
 
-      # Paso 4: Crear la estructura de carpetas y copiar archivos .pkg.tar.zst
-      - name: Copy .pkg.tar.zst files to /pkgs/x86_64
+      # Step 4: Copy generated packages into /pkgs/x86_64
+      - name: Copy generated packages into /pkgs/x86_64
         run: |
-          mkdir -p "$GITHUB_WORKSPACE/pkgs/x86_64"
+          mkdir -p "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
           find packages -type f -name "*.pkg.tar.zst" | while read file; do
-            echo "Copying: $file to $GITHUB_WORKSPACE/pkgs/x86_64/"
-            cp "$file" "$GITHUB_WORKSPACE/pkgs/x86_64/"
+            echo "Copying: $file to $GITHUB_WORKSPACE/output_dir/pkgs/x86_64/"
+            cp "$file" "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/"
           done
+          ls ./output_dir/pkgs/x86_64
+          
       # Paso 5: Ejecutar repo-add dentro de un contenedor Docker de Arch Linux
       - name: Run repo-add in Arch Linux Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c '
             pacman -Sy --noconfirm pacman-contrib && \
             echo "Pacman actualizado" && \
-            
-            # Eliminar la base de datos existente si existe
-            rm -f /workspace/pkgs/x86_64/owlArchRepo.db.tar.gz && \
-            echo "Archivo de base de datos eliminado" && \
-            
+
             # Crear la base de datos desde cero
-            repo-add /workspace/pkgs/x86_64/owlArchRepo.db.tar.gz && \
+            repo-add ./output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz && \
             echo "Base de datos creada" && \
             
             # Añadir los paquetes válidos a la base de datos
-            cd /workspace/pkgs/x86_64 && \
-            echo "Cambiando a directorio /workspace/pkgs/x86_64" && \
+            cd  ./output_dir/pkgs/x86_64 && \
+            echo "Cambiando a directorio  ./output_dir/pkgs/x86_64" && \
             
             find . -type f -name "*.pkg.tar.zst" | while read pkg; do \
               echo "Procesando: $pkg"; \
@@ -91,46 +150,37 @@ jobs:
               # Verificar si el paquete es válido
               if tar -I zstd -tf "$pkg" &> /dev/null; then \
                 echo "Paquete válido: $pkg"; \
-                repo-add /workspace/pkgs/x86_64/owlArchRepo.db.tar.gz "$pkg" && \
+                repo-add  ./output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz "$pkg" && \
                 echo "Paquete añadido: $pkg"; \
               else \
                 echo "Saltando paquete inválido: $pkg"; \
               fi \
             done'
-      
-      # Paso 6: Eliminar la carpeta /packages y su contenido
-      - name: Delete /packages directory and its contents
+      - name: add jekyll artifact to package artifact
         run: |
-          echo "Deleting /packages and its contents"
-          rm -rf $GITHUB_WORKSPACE/packages    
-          
-      # Paso 7: Hacer commit y push de la carpeta pkgs/x86_64 actualizada
-      #- name: Commit and push the updated pkgs/x86_64 directory
-      #  uses: EndBug/add-and-commit@v9
-      #  with:
-      #    author_name: "GitHub Actions"
-      #    author_email: "github-actions@github.com"
-      #    message: "Publish new packages to GitHub Pages"
-      #    add: 'pkgs/x86_64/*'
+          cp -r ./build_pages/* ./output_dir/
 
-      # Paso 8: Desplegar a GitHub Pages
-      #- name: Deploy to GitHub Pages
-      #  run: |
-      #    git config --global user.name "GitHub Actions"
-      #    git config --global user.email "github-actions@github.com"
-      #    git remote set-url origin https://github.com/Leku2020/owlArchRepo.git
-      #    git add .
-      #    git commit -m "Deploy updated packages"
-      #    git lfs install
-      #    git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Leku2020/owlArchRepo.git
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with: 
+          name: deploy_artifact
+          path: ./output_dir
+          
   # Deployment job
   deploy:
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: prepare_deploy_artifact
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: deploy_artifact
