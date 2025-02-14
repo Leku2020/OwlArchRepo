@@ -40,10 +40,10 @@ jobs:
             '"
       - name: Create artifact structure
         run: |
-          mkdir -p output_dir
+          mkdir -p $GITHUB_WORKSPACE/output_dir
           find . -type f -name "*.pkg.tar.zst" | while read file; do
-            echo "Moving: $file to output_dir/"
-            mv "$file" output_dir
+            echo "Moving: $file to $GITHUB_WORKSPACE/output_dir/"
+            mv "$file" $GITHUB_WORKSPACE/output_dir
           done
 
       # Step 3: Upload packages to GitHub      
@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build_packages_artifact
-          path: ./output_dir
+          path: $GITHUB_WORKSPACE/output_dir
 
   build_pages:
     runs-on: ubuntu-latest
