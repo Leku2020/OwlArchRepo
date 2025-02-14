@@ -40,9 +40,9 @@ jobs:
             '"
       - name: Create artifact structure
         run: |
-          mkdir -p packages
+          mkdir -p output_dir
           find . -type f -name "*.pkg.tar.zst" | while read file; do
-            echo "Moving: $file to packages/"
+            echo "Moving: $file to output_dir/"
             mv "$file" output_dir
           done
 
