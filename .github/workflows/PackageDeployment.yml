@@ -26,6 +26,7 @@ jobs:
       # 6. Launching makepkg -si to generate each package
       - name: Build packages
         run: |
+          ls $GITHUB_WORKSPACE
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
             useradd -m builder && echo 'builder:password' | chpasswd && \
             pacman -Sy --noconfirm sudo base-devel git && \
