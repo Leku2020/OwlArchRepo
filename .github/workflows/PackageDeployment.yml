@@ -107,14 +107,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build_packages_artifact # Origin artifact name
-          path: $GITHUB_WORKSPACE/build_packages  # Downloaded artifact path
+          path: build_packages  # Downloaded artifact path
 
       # Step 3: Download the artifact generated in build_pages into ./build_pages
       - name: Download build_pages artifact
         uses: actions/download-artifact@v4
         with:
           name: build_pages_artifact  # Origin artifact name
-          path: $GITHUB_WORKSPACE/build_pages  # Downloaded artifact path
+          path: build_pages  # Downloaded artifact path
 
       # Step 4: Copy generated packages into /pkgs/x86_64
       - name: Copy generated packages into /pkgs/x86_64
@@ -163,7 +163,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with: 
           name: deploy_artifact
-          path: $GITHUB_WORKSPACE/output_dir
+          path: output_dir
           
   # Deployment job
   deploy:
