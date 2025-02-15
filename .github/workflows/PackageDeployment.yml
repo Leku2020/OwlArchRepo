@@ -41,6 +41,7 @@ jobs:
                 mv *.pkg.tar.zst $GITHUB_WORKSPACE/output_dir/
                 cd -
               done
+              ls $GITHUB_WORKSPACE/output_dir
             '"
           
 
