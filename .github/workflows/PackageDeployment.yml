@@ -126,7 +126,7 @@ jobs:
         run: |
           mkdir -p "./output_dir/pkgs/x86_64"
           cd ./build_packages
-          find ./build_packages -type f -name "*.pkg.tar.zst" | while read file; do
+          find . -type f -name "*.pkg.tar.zst" | while read file; do
             echo "Copying: $file to ./output_dir/pkgs/x86_64"
             cp "$file" "./output_dir/pkgs/x86_64"
           done
