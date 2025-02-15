@@ -119,6 +119,7 @@ jobs:
       # Step 4: Copy generated packages into /pkgs/x86_64
       - name: Copy generated packages into /pkgs/x86_64
         run: |
+          ls $GITHUB_WORKSPACE/build_packages_artifact
           mkdir -p "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
           cd $GITHUB_WORKSPACE/build_packages
           find . -type f -name "*.pkg.tar.zst" | while read file; do
@@ -157,6 +158,7 @@ jobs:
       - name: add jekyll artifact to package artifact
         run: |
           ls $GITHUB_WORKSPACE/build_pages
+          tar -xvf "$GITHUB_WORKSPACE/build_pages/artifact.tar" -C "$GITHUB_WORKSPACE/build_pages/artifact"
           cp -r $GITHUB_WORKSPACE/build_pages/artifact/* $GITHUB_WORKSPACE/output_dir/
 
       - name: Upload artifact
