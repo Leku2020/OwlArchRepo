@@ -124,17 +124,17 @@ jobs:
       # Step 4: Copy generated packages into /pkgs/x86_64
       - name: Copy generated packages into /pkgs/x86_64
         run: |
-          mkdir -p "./output_dir/pkgs/x86_64"
-          ls ./output_dir
+          mkdir -p "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
           cd ./build_packages
           find . -type f -name "*.pkg.tar.zst" | while read file; do
-            echo "Copying: $file to ./output_dir/pkgs/x86_64"
-            cp "$file" "./output_dir/pkgs/x86_64"
+            echo "Copying: $file to $GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
+            cp "$file" "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
           done
           
       # Paso 5: Ejecutar repo-add dentro de un contenedor Docker de Arch Linux
       - name: Run repo-add in Arch Linux Docker container
         run: |
+          ls $GITHUB_WORKSPACE
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c '
             pacman -Sy --noconfirm pacman-contrib && \
             echo "Pacman actualizado" && \
