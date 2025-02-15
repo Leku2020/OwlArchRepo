@@ -129,7 +129,6 @@ jobs:
       # Paso 5: Ejecutar repo-add dentro de un contenedor Docker de Arch Linux
       - name: Run repo-add in Arch Linux Docker container
         run: |
-          ls $GITHUB_WORKSPACE
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c '
             pacman -Sy --noconfirm pacman-contrib && \
             echo "Pacman actualizado" && \
@@ -139,7 +138,7 @@ jobs:
             echo "Base de datos creada" && \
             
             # Añadir los paquetes válidos a la base de datos
-            cd  workspace/output_dir/pkgs/x86_64 && \
+            cd  /workspace/output_dir/pkgs/x86_64 && \
             echo "Cambiando a directorio  ./output_dir/pkgs/x86_64" && \
             
             find . -type f -name "*.pkg.tar.zst" | while read pkg; do \
