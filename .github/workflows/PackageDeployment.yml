@@ -102,30 +102,25 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_packages, build_pages]
     steps:
-
-      # Step 1: Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       # Step 2: Download the artifact generated in build_packages into ./build_packages
       - name: Download build_packages artifact
         uses: actions/download-artifact@v4
         with:
           name: build_packages_artifact # Origin artifact name
-          path: ./build_packages  # Downloaded artifact path
+          path: $GITHUB_WORKSPACE/build_packages  # Downloaded artifact path
 
       # Step 3: Download the artifact generated in build_pages into ./build_pages
       - name: Download build_pages artifact
         uses: actions/download-artifact@v4
         with:
           name: build_pages_artifact  # Origin artifact name
-          path: ./build_pages  # Downloaded artifact path
+          path: $GITHUB_WORKSPACE/build_pages  # Downloaded artifact path
 
       # Step 4: Copy generated packages into /pkgs/x86_64
       - name: Copy generated packages into /pkgs/x86_64
         run: |
           mkdir -p "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
-          cd ./build_packages
+          cd $GITHUB_WORKSPACE/build_packages
           find . -type f -name "*.pkg.tar.zst" | while read file; do
             echo "Copying: $file to $GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
             cp "$file" "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
@@ -140,11 +135,11 @@ jobs:
             echo "Pacman actualizado" && \
 
             # Crear la base de datos desde cero
-            repo-add ./output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz && \
+            repo-add output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz && \
             echo "Base de datos creada" && \
             
             # Añadir los paquetes válidos a la base de datos
-            cd  ./output_dir/pkgs/x86_64 && \
+            cd  workspace/output_dir/pkgs/x86_64 && \
             echo "Cambiando a directorio  ./output_dir/pkgs/x86_64" && \
             
             find . -type f -name "*.pkg.tar.zst" | while read pkg; do \
@@ -153,7 +148,7 @@ jobs:
               # Verificar si el paquete es válido
               if tar -I zstd -tf "$pkg" &> /dev/null; then \
                 echo "Paquete válido: $pkg"; \
-                repo-add  ./output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz "$pkg" && \
+                repo-add  /workspace/output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz "$pkg" && \
                 echo "Paquete añadido: $pkg"; \
               else \
                 echo "Saltando paquete inválido: $pkg"; \
@@ -162,13 +157,13 @@ jobs:
 
       - name: add jekyll artifact to package artifact
         run: |
-          cp -r ./build_pages/* ./output_dir/
+          cp -r $GITHUB_WORKSPACE/build_pages/* $GITHUB_WORKSPACE/output_dir/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with: 
           name: deploy_artifact
-          path: ./output_dir
+          path: $GITHUB_WORKSPACE/output_dir
           
   # Deployment job
   deploy:
