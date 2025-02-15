@@ -124,10 +124,11 @@ jobs:
       # Step 4: Copy generated packages into /pkgs/x86_64
       - name: Copy generated packages into /pkgs/x86_64
         run: |
-          mkdir -p "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64"
+          mkdir -p "./output_dir/pkgs/x86_64"
+          cd ./build_packages
           find packages -type f -name "*.pkg.tar.zst" | while read file; do
-            echo "Copying: $file to $GITHUB_WORKSPACE/output_dir/pkgs/x86_64/"
-            cp "$file" "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/"
+            echo "Copying: $file to ./output_dir/pkgs/x86_64"
+            cp "$file" "./output_dir/pkgs/x86_64"
           done
           ls ./output_dir/pkgs/x86_64
           
