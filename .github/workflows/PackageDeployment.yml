@@ -43,7 +43,9 @@ jobs:
               done
               ls $GITHUB_WORKSPACE/output_dir
             '"
-          
+            
+      - name: List packages
+        run: ls $GITHUB_WORKSPACE/output_dir
 
       # Step 3: Upload packages to GitHub      
       - name: Upload packages to GitHub
