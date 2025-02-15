@@ -159,7 +159,8 @@ jobs:
         run: |
           ls $GITHUB_WORKSPACE/build_pages
           tar -xvf "$GITHUB_WORKSPACE/build_pages/artifact.tar" -C "$GITHUB_WORKSPACE/build_pages"
-          cp -r $GITHUB_WORKSPACE/build_pages/artifact/* $GITHUB_WORKSPACE/output_dir/
+          ls $GITHUB_WORKSPACE/build_pages
+          cp -r $GITHUB_WORKSPACE/build_pages/* $GITHUB_WORKSPACE/output_dir/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
