@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build_packages_artifact
-          path: $GITHUB_WORKSPACE/output_dir
+          path: /home/runner/work/owlArchRepo/owlArchRepo/output_dir
           if-no-files-found: error
 
   build_pages:
