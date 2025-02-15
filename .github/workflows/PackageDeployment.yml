@@ -156,6 +156,7 @@ jobs:
 
       - name: add jekyll artifact to package artifact
         run: |
+          ls $GITHUB_WORKSPACE/build_pages
           cp -r $GITHUB_WORKSPACE/build_pages/artifact/* $GITHUB_WORKSPACE/output_dir/
 
       - name: Upload artifact
