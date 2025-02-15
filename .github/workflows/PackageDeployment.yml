@@ -126,11 +126,10 @@ jobs:
         run: |
           mkdir -p "./output_dir/pkgs/x86_64"
           cd ./build_packages
-          find packages -type f -name "*.pkg.tar.zst" | while read file; do
+          find ./build_packages -type f -name "*.pkg.tar.zst" | while read file; do
             echo "Copying: $file to ./output_dir/pkgs/x86_64"
             cp "$file" "./output_dir/pkgs/x86_64"
           done
-          ls ./output_dir/pkgs/x86_64
           
       # Paso 5: Ejecutar repo-add dentro de un contenedor Docker de Arch Linux
       - name: Run repo-add in Arch Linux Docker container
