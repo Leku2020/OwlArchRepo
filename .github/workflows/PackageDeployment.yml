@@ -125,6 +125,7 @@ jobs:
       - name: Copy generated packages into /pkgs/x86_64
         run: |
           mkdir -p "./output_dir/pkgs/x86_64"
+          ls ./output_dir
           cd ./build_packages
           find . -type f -name "*.pkg.tar.zst" | while read file; do
             echo "Copying: $file to ./output_dir/pkgs/x86_64"
@@ -158,6 +159,7 @@ jobs:
                 echo "Saltando paquete inválido: $pkg"; \
               fi \
             done'
+
       - name: add jekyll artifact to package artifact
         run: |
           cp -r ./build_pages/* ./output_dir/
