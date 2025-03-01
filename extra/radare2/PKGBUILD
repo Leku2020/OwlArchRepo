@@ -1,7 +1,4 @@
 # meson/ninja build() & package() taken from community/radare2
-# Contributor: 0xAA <0xaa at dmg dot sx>
-# Contributor: bratus <szczepaniak.bartek plus github at gmail dot com>
-# Contributor: jjguti
 pkgname=radare2-git
 pkgver=5.9.9.r33256.93202f3546
 pkgrel=1
@@ -24,9 +21,7 @@ pkgver () {
 }
 
 build() {
-  # this is actually needed to prevent linking against old system-wide r2 libs
-  # you can comment this out, if you build in a clean environment
-  export PKG_CONFIG_PATH="${srcdir}/${pkgname}/pkgcfg:${PKG_CONFIG_PATH}"
+  #export PKG_CONFIG_PATH="${srcdir}/${pkgname}/pkgcfg:${PKG_CONFIG_PATH}"
 
   CFLAGS="${CFLAGS//-fPIE -pie}"
 

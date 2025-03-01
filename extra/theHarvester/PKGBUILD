@@ -1,0 +1,60 @@
+pkgname=theharvester-git
+pkgver=4.6.0.r225.gdfaf1f1c
+pkgrel=1
+pkgdesc="Gather emails, names, subdomains, IPs and URLs related to targets using public sources"
+arch=(any)
+url="https://github.com/laramies/theHarvester"
+license=(GPL2)
+depends=(
+  python
+  python-pip
+	python-aiodns
+	python-aiofiles
+	python-aiohttp
+	python-aiosqlite
+	python-beautifulsoup4
+	python-certifi
+	python-dnspython
+	python-fastapi
+	python-lxml
+	python-netaddr
+	python-ujson
+	python-yaml
+	python-requests
+	python-retrying
+	python-shodan
+	uvicorn
+	python-uvloop
+  python-setuptools
+)
+makedepends=(git python-pip python-{build,installer,wheel} python-setuptools)
+checkdepends=(python-pytest)
+install="theHarvester.install"
+source=("$pkgname::git+$url.git")
+b2sums=('SKIP')
+
+pkgver() {
+	cd $pkgname
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    cd "$srcdir/$pkgname"
+    python -m venv build_env
+    source build_env/bin/activate
+    pip install --upgrade pip setuptools wheel build
+    python -m build --wheel
+    deactivate
+    rm -rf venv
+}
+
+#check() {
+#	cd $pkgname
+#	export PYTHONPATH="$PWD/build/lib"
+#	python -m unittest discover
+#}
+
+package() {
+	cd $pkgname
+  python -m pip install --no-deps --root="$pkgdir" --prefix=/usr .
+}
