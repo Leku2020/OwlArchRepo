@@ -1,3 +1,10 @@
+---
+layout: software
+title: Brave
+permalink: /brave
+---
+
+
 # Brave Browser
 
 Brave is a free and open-source web browser developed by Brave Software, Inc. based on the Chromium web browser. Brave is designed to block ads and website trackers by default and provides users with a faster and more private browsing experience.

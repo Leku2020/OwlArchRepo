@@ -1,3 +1,8 @@
+---
+layout: software
+title: Radare
+permalink: /radare
+---
 
 # Radare2 - Análisis y Reversing de Binarios
 

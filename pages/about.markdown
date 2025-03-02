@@ -1,18 +1,20 @@
 ---
+// filepath: /c:/Users/Leku/Desktop/OwlArch/owlArchRepo/pages/about.markdown
 layout: page
 title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+OwlArch es un repositorio de paquetes para Arch Linux. Aquí encontrarás una colección de paquetes personalizados y herramientas útiles para mejorar tu experiencia con Arch Linux.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+## Más información
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
+Puedes encontrar más información sobre cómo personalizar tu tema de Jekyll, así como la documentación básica de uso de Jekyll en [jekyllrb.com](https://jekyllrb.com/).
+
+## Código fuente
+
+Puedes encontrar el código fuente de OwlArch en GitHub:
+[OwlArch](https://github.com/leku2020/owlArchRepo)
+
+Puedes encontrar el código fuente de Jekyll en GitHub:
 [jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
