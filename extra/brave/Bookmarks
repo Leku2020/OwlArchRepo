@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OSINT & Malware Analysis Bookmarks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            margin: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .category {
+            margin-bottom: 30px;
+        }
+        .category h2 {
+            color: #BB86FC;
+            border-bottom: 2px solid #BB86FC;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        a {
+            color: #64B5F6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>OSINT & Malware Analysis Resources</h1>
 
+    <!-- OSINT Tools -->
+    <div class="category">
+        <h2>OSINT Tools</h2>
+        <ul>
+            <li><a href="https://shodan.io" target="_blank">Shodan</a> - IoT device and exposed services search engine</li>
+            <li><a href="https://censys.io" target="_blank">Censys</a> - Global infrastructure scanning</li>
+            <li><a href="https://intelx.io" target="_blank">IntelX</a> - Document and leak search</li>
+            <li><a href="https://osintframework.com" target="_blank">OSINT Framework</a> - Curated OSINT tools collection</li>
+            <li><a href="https://maltego.com" target="_blank">Maltego</a> - Entity relationship analysis</li>
+        </ul>
+    </div>
+
+    <!-- Malware Analysis -->
+    <div class="category">
+        <h2>Malware Analysis</h2>
+        <ul>
+            <li><a href="https://virustotal.com" target="_blank">VirusTotal</a> - Multi-engine malware analysis</li>
+            <li><a href="https://hybrid-analysis.com" target="_blank">Hybrid Analysis</a> - Dynamic malware sandboxing</li>
+            <li><a href="https://any.run" target="_blank">ANY.RUN</a> - Interactive malware sandbox</li>
+            <li><a href="https://joesandbox.com" target="_blank">Joe Sandbox</a> - Advanced malware analysis</li>
+            <li><a href="https://unpac.me" target="_blank">Unpac.me</a> - Malware unpacking service</li>
+        </ul>
+    </div>
+
+    <!-- Threat Intelligence -->
+    <div class="category">
+        <h2>Threat Intelligence</h2>
+        <ul>
+            <li><a href="https://otx.alienvault.com" target="_blank">AlienVault OTX</a> - IOC sharing platform</li>
+            <li><a href="https://abuseipdb.com" target="_blank">AbuseIPDB</a> - Malicious IP database</li>
+            <li><a href="https://urlhaus.abuse.ch" target="_blank">URLhaus</a> - Malicious URL repository</li>
+            <li><a href="https://feodotracker.abuse.ch" target="_blank">Feodo Tracker</a> - Banking malware C2 tracking</li>
+        </ul>
+    </div>
+
+    <!-- Network Analysis -->
+    <div class="category">
+        <h2>Network Analysis</h2>
+        <ul>
+            <li><a href="https://wireshark.org" target="_blank">Wireshark</a> - Protocol analyzer</li>
+            <li><a href="https://packettotal.com" target="_blank">PacketTotal</a> - PCAP analysis</li>
+            <li><a href="https://dnslytics.com" target="_blank">DNSlytics</a> - Domain investigation</li>
+            <li><a href="https://centralops.net" target="_blank">CentralOps</a> - Network tools suite</li>
+        </ul>
+    </div>
+
+    <!-- Digital Forensics -->
+    <div class="category">
+        <h2>Digital Forensics</h2>
+        <ul>
+            <li><a href="https://sleuthkit.org/autopsy" target="_blank">Autopsy</a> - Forensic analysis platform</li>
+            <li><a href="https://volatility.tools" target="_blank">Volatility</a> - Memory forensics</li>
+            <li><a href="https://ericzimmerman.github.io" target="_blank">Registry Explorer</a> - Windows registry analysis</li>
+        </ul>
+    </div>
+
+    <!-- Cybersecurity News -->
+    <div class="category">
+        <h2>Cybersecurity News</h2>
+        <ul>
+            <li><a href="https://krebsonsecurity.com" target="_blank">Krebs on Security</a></li>
+            <li><a href="https://thehackernews.com" target="_blank">The Hacker News</a></li>
+            <li><a href="https://bleepingcomputer.com" target="_blank">Bleeping Computer</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

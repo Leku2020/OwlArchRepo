@@ -48,12 +48,6 @@ build() {
     rm -rf venv
 }
 
-#check() {
-#	cd $pkgname
-#	export PYTHONPATH="$PWD/build/lib"
-#	python -m unittest discover
-#}
-
 package() {
 	cd $pkgname
   python -m pip install --no-deps --root="$pkgdir" --prefix=/usr .

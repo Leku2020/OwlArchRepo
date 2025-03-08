@@ -1,0 +1,44 @@
+pkgname=python-shodan
+_pkgname="${pkgname#python-}"
+pkgver=1.31.0
+pkgrel=3
+pkgdesc='The official Python library and CLI for Shodan'
+url='https://shodan.readthedocs.io/'
+license=('MIT')
+arch=('any')
+depends=(
+  'python'
+  'python-click'
+  'python-click-plugins'
+  'python-colorama'
+  'python-xlsxwriter'
+  'python-requests'
+  'python-setuptools'
+  'python-tldextract'
+)
+makedepends=(
+  'python-build'
+  'python-installer'
+  'python-wheel'
+)
+optdepends=('python-ujson: faster JSON decoding')
+source=("$pkgname-$pkgver.tar.gz::https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+b2sums=('7d22e8ec9e32669494838ddef76115ce80ba4600ca71e5c7e9e6c91d82bbf2a55e5e754d7fd4018545c9dbba01fd21bd9fd444d4f2090938f09c7b1610b98100')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+
+  # symlink license file
+  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
+  install -d "$pkgdir/usr/share/licenses/$pkgname"
+  ln -s "$site_packages/${pkgname#python-}-$pkgver.dist-info/LICENSE" \
+    "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

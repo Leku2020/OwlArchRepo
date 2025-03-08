@@ -1,4 +1,3 @@
-# meson/ninja build() & package() taken from community/radare2
 pkgname=radare2-git
 pkgver=5.9.9.r33256.93202f3546
 pkgrel=1

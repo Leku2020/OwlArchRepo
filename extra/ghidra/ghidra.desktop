@@ -1,6 +1,9 @@
 [Desktop Entry]
-Name=Ghidra
-Exec=/opt/ghidra/ghidraRun
-Icon=ghidra
+Version=1.0
 Type=Application
-Categories=Development;Debugger;Profiling;
+Name=Ghidra
+Comment=Software reverse engineering framework
+Exec=ghidra
+Icon=ghidra
+Categories=Utility;
+Terminal=false

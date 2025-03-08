@@ -1,4 +1,4 @@
-name: Build PKGBUILDs
+name: Build PKGBUILDs and deploy pages
 
 on:
   push:
@@ -76,12 +76,13 @@ jobs:
           bundle install  
           cd ..
 
-      - name: Copy markdown files from extra to pages
+      - name: Copy markdown files from extra and ownSoftware to pages
         run: |
-          find extra -type f -name "*.markdown" -exec sh -c '
+          find extra ownSoftware -type f -name "*.markdown" -exec sh -c '
             for file; do
-              dest="pages/${file#extra/}"
-              mkdir -p "$(dirname "$dest")"
+              # Conserva la estructura de carpetas relativa
+              dest="pages/${file%/*}/"
+              mkdir -p "$dest"
               cp "$file" "$dest"
             done
           ' sh {} +
@@ -204,9 +205,9 @@ jobs:
 
       - name: Filter and build modified packages
         run: |
-          modified_dirs=$(cat modified_paths.txt | grep '^extra/' | xargs -I {} dirname {} | sort | uniq)
+          modified_dirs=$(cat modified_paths.txt | grep -E '^(extra|ownSoftware)/' | xargs -I {} dirname {} | sort | uniq)
           if [ -z "$modified_dirs" ]; then
-            echo "No modified directories in 'extra/'"
+            echo "No modified directories in 'extra/' or 'ownSoftware/'"
             exit 0
           fi
           docker run --rm -v ${{ github.workspace }}:/$GITHUB_WORKSPACE -w $GITHUB_WORKSPACE archlinux:latest /bin/bash -c "
@@ -235,4 +236,3 @@ jobs:
           name: modified_packages_artifact
           path: /home/runner/work/owlArchRepo/owlArchRepo/output_dir
           if-no-files-found: error
-

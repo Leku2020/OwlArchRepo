@@ -4,70 +4,100 @@ title: Radare
 permalink: /radare
 ---
 
-# Radare2 - Análisis y Reversing de Binarios
+[🔙 Go back home](/)
 
-Radare2 (r2) es un conjunto de herramientas de código abierto para analizar, depurar, desensamblar y manipular binarios. Es ampliamente utilizado en la ingeniería inversa y seguridad informática.
+# Radare
+**Binary Analysis and Reverse Engineering Toolkit**
 
-## Instalación
+## Introduction  
+Radare2 (r2) is an open-source framework for analyzing, debugging, disassembling, and manipulating binaries. It is widely used in reverse engineering, malware analysis, and cybersecurity research.
 
-```
-sudo pacman -S radare2
-```
+## Features  
+- Full binary analysis (disassembly, decompilation, and debugging).  
+- Cross-platform support (Linux, macOS, Windows, etc.).  
+- Scriptable command-line interface with automation capabilities.  
+- Built-in hexadecimal editor and binary patching tools.  
+- Integration with Ghidra, IDA Pro, and other reverse engineering tools.  
 
+## Installation  
 
-## Uso Básico
+1. Open a terminal.  
+2. Install Radare2 using:  
+   ```sh  
+   sudo pacman -S radare2  
+   ```  
 
-### Análisis de un binario
+### Install Verification  
+Check the version to confirm installation:  
+```sh  
+r2 -v  
+```  
 
-```
-r2 /bin/ls
-```
+### Uninstall  
+```sh  
+sudo pacman -R radare2  
+```  
 
-### Comandos Principales
+## Usage  
 
-Dentro de radare2, puedes usar los siguientes comandos:
+### Analyze a Binary  
+```sh  
+r2 /bin/ls  
+```  
 
-|Comando|Descripción|
-|---|---|
-|`?`|Mostrar ayuda|
-|`aaa`|Analizar completamente el binario|
-|`afl`|Listar funciones encontradas|
-|`pdf @ main`|Mostrar el pseudocódigo de la función `main`|
-|`s main`|Saltar a la función `main`|
-|`i`|Mostrar información del binario|
+### Key Commands (Inside Radare2 CLI)  
+| Command       | Description                                  |
+|---------------|----------------------------------------------|
+| `?`           | Show help                                    |
+| `aaa`         | Perform full binary analysis                |
+| `afl`         | List identified functions                   |
+| `pdf @ main`  | Display disassembly/pseudocode of `main`    |
+| `s main`      | Seek to the `main` function                 |
+| `i`           | Show binary metadata (architecture, format) |  
 
-## Ejemplos de Uso
+### Example Workflows  
 
-### Desensamblar la función `main`
+#### Disassemble the `main` Function  
+```sh  
+r2 -A /bin/ls    # Auto-analyze the binary  
+pdf @ main       # View disassembly of main  
+```  
 
-```
-r2 -A /bin/ls  # -A ejecuta un análisis automático
-pdf @ main      # Mostrar el código ensamblador de main
-```
+#### Search for Strings in a Binary  
+```sh  
+izz              # List all strings in the binary  
+```  
 
-### Buscar cadenas de texto dentro del binario
+#### Debug an Executable  
+```sh  
+r2 -d /bin/ls    # Start debugging  
+```  
 
-```
-izz
-```
+**Common Debugging Commands:**  
+```  
+db main    # Set breakpoint at main  
+dc         # Continue execution to breakpoint  
+dr         # Show register values  
+px 32 @ esp # Dump 32 bytes from stack pointer  
+```  
 
-### Depurar un ejecutable con radare2
+## Official Documentation & More Info  
+- [GitHub Repository](https://github.com/radareorg/radare2)  
+- [Radare2 Book](https://radare.gitbooks.io/radare2book/)  
 
-```
-r2 -d /bin/ls
-```
+## Contributing  
+Contributions are welcome via GitHub pull requests. See the [contributing guidelines](https://github.com/radareorg/radare2/blob/master/CONTRIBUTING.md).  
 
-Dentro de radare2:
+## Support  
+- Ask questions on the [Radare2 Discord](https://discord.gg/7V7Vg9Q).  
+- Report issues on [GitHub](https://github.com/radareorg/radare2/issues).  
 
-```
- db main  # Poner un breakpoint en main
- dc       # Ejecutar hasta el breakpoint
- dr       # Mostrar registros
- px 32 @ esp  # Mostrar 32 bytes de la pila
-```
+## License  
+Radare2 is released under the **LGPLv3 License**.  
 
-## Recursos
+---
 
-- Documentación oficial
-    
-- [Repositorio GitHub](https://github.com/radareorg/radare2)
+<div style="display: flex; justify-content: space-between;">
+  <a href="shodan">🔙 Python Shodan</a>
+  <a href="spiderfoot">🔜 SpiderFoot</a>
+</div>
