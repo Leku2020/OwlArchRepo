@@ -45,7 +45,14 @@ jobs:
 
       - name: List packages
         run: echo $GITHUB_WORKSPACE/output_dir
-
+      # Step 5: Rename files with invalid characters
+      - name: Rename files with invalid characters
+        run: |
+          # Find and rename files with invalid characters in the name
+          find $GITHUB_WORKSPACE/output_dir -name "*:*" | while read file; do
+            # Rename files by replacing colon with an underscore or another allowed character
+            mv "$file" "${file//:/_}"
+          done
       # Step 3: Upload packages to GitHub      
       - name: Upload packages to GitHub
         uses: actions/upload-artifact@v4
