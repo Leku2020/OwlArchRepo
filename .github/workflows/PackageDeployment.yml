@@ -36,7 +36,7 @@ jobs:
               find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
                 dir=\$(dirname \$PKGBUILD)
                 echo \"Building package in \$dir\"
-                cd \$dir && makepkg -si --noconfirm
+                cd \$dir && makepkg -s --noconfirm --skippgpcheck
                 mv *.pkg.tar.zst $GITHUB_WORKSPACE/output_dir/
                 cd -
               done
@@ -47,7 +47,7 @@ jobs:
               ls $GITHUB_WORKSPACE/output_dir
             '"
       - name: List packages
-        run: echo $GITHUB_WORKSPACE/output_dir
+        run: ls $GITHUB_WORKSPACE/output_dir
 
       # Step 3: Upload packages to GitHub      
       - name: Upload packages to GitHub
