@@ -3,7 +3,7 @@ import requests
 import sys
 import subprocess
 
-# Función para realizar la búsqueda en VirusTotal
+# VirusTotal search function
 def search_virustotal(api_key, search_type, search_value):
     url = f"https://www.virustotal.com/api/v3/{search_type}/{search_value}"
     headers = {
@@ -12,13 +12,13 @@ def search_virustotal(api_key, search_type, search_value):
 
     try:
         response = requests.get(url, headers=headers)
-        response.raise_for_status()  # Lanza un error si la respuesta tiene un status diferente a 2xx
+        response.raise_for_status()  # Throws an error if the response has a status other than 2xx.
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error al realizar la búsqueda: {e}")
+        print(f"Error whilst searching: {e}")
         sys.exit(1)
 
-# Función para realizar la búsqueda en MalwareBazaar
+# Function to perform the search in MalwareBazaar
 def search_malwarebazaar(auth_key, search_type, search_value):
     url = "https://mb-api.abuse.ch/api/v1/"
     headers = {
@@ -46,33 +46,33 @@ def search_malwarebazaar(auth_key, search_type, search_value):
         response = requests.post(url, headers=headers, data=data)
         return response.json()
 
-# Función principal que maneja la entrada del usuario
+# Main function that handles user input
 def main():
-    # Definir el parser de argumentos
-    parser = argparse.ArgumentParser(description="Buscar información en VirusTotal o MalwareBazaar por hash, ip, dominio, etc.")
+    # Define the parser arguments
+    parser = argparse.ArgumentParser(description="Search for information in VirusTotal or MalwareBazaar by hash, ip, domain, etc.")
     
-    # Opciones para VirusTotal
-    parser.add_argument("--vt", action="store_true", help="Buscar en VirusTotal")
-    parser.add_argument("--ip", type=str, help="Buscar por dirección IP en VirusTotal.")
-    parser.add_argument("--hash", type=str, help="Buscar por hash (MD5, SHA1, SHA256) en VirusTotal o MalwareBazaar.")
-    parser.add_argument("--domain", type=str, help="Buscar por dominio en VirusTotal.")
+    # VirusTotal parameters
+    parser.add_argument("--vt", action="store_true", help="Search in VirusTotal")
+    parser.add_argument("--ip", type=str, help="Search by IP in VirusTotal.")
+    parser.add_argument("--hash", type=str, help="Search by Hash(MD5, SHA1, SHA256) in either VirusTotal or MalwareBazaar.")
+    parser.add_argument("--domain", type=str, help="Search by Domain in VirusTotal.")
     
-    # Opciones para MalwareBazaar
-    parser.add_argument("--mb", action="store_true", help="Buscar en MalwareBazaar")
-    parser.add_argument("--tag", type=str, help="Buscar por tag en MalwareBazaar.")
-    parser.add_argument("--sig", type=str, help="Buscar por signature en MalwareBazaar.")
-    parser.add_argument("--filetype", type=str, help="Buscar por tipo de archivo en MalwareBazaar.")
-    parser.add_argument("--sample", type=str, help="Obtener muestra de un hash en MalwareBazaar.")
-    parser.add_argument("--uploadSample", type=str, help="Subir una muestra a MalwareBazaar.")
+    # MalwareBazaar Paramenters
+    parser.add_argument("--mb", action="store_true", help="BSearch in MalwareBazaar")
+    parser.add_argument("--tag", type=str, help="Search by tag in MalwareBazaar")
+    parser.add_argument("--sig", type=str, help="Search by signature in MalwareBazaar.")
+    parser.add_argument("--filetype", type=str, help="Search by file type in MalwareBazaar.")
+    parser.add_argument("--sample", type=str, help="Obtain a hash sample from MalwareBazaar.")
+    parser.add_argument("--uploadSample", type=str, help="Upload a hash sample to MalwareBazaar.")
     
-    # Aquí debes poner tu clave API de VirusTotal y MalwareBazaar
-    vt_api_key = "TU_API_KEY_DE_VIRUSTOTAL"
-    mb_auth_key = "TU_API_KEY_DE_MALWAREBAZAAR"
+    # Here, the API Keys must be placed
+    vt_api_key = "YOUR_API_KEY_FROM_VIRUSTOTAL"
+    mb_auth_key = "YOUR_API_KEY_FROM_MALWAREBAZAAR"
 
-    # Parsear los argumentos
+    # Parse the arguments
     args = parser.parse_args()
 
-    # Si se solicita VirusTotal
+    # If VirusTotal is used
     if args.vt:
         if args.ip:
             search_type = "ip_addresses"
@@ -84,15 +84,15 @@ def main():
             search_type = "domains"
             search_value = args.domain
         else:
-            print("Debes especificar un tipo de búsqueda en VirusTotal: --ip, --hash, --domain.")
+            print("You must specify a search type to use VirusTotal: --ip, --hash, --domain.")
             sys.exit(1)
         
-        # Realizar la búsqueda en VirusTotal
-        print(f"Buscando {search_type} '{search_value}' en VirusTotal...")
+        # Performs the search in VirusTotal
+        print(f"Searching {search_type} '{search_value}' in VirusTotal...")
         result = search_virustotal(vt_api_key, search_type, search_value)
         print(result)
 
-    # Si se solicita MalwareBazaar
+    # If MalwareBazaar is used
     elif args.mb:
         if args.hash:
             search_type = "hash"
@@ -113,16 +113,16 @@ def main():
             search_type = "upload"
             search_value = args.uploadSample
         else:
-            print("Debes especificar un tipo de búsqueda en MalwareBazaar: --hash, --tag, --sig, --filetype, --sample, --uploadSample.")
+            print("You must specify a search type to use MalwareBazaar: --hash, --tag, --sig, --filetype, --sample, --uploadSample.")
             sys.exit(1)
         
-        # Realizar la búsqueda en MalwareBazaar
-        print(f"Buscando {search_type} '{search_value}' en MalwareBazaar...")
+        # Performs the search in MalwareBazaar
+        print(f"Searching {search_type} '{search_value}' in MalwareBazaar...")
         result = search_malwarebazaar(mb_auth_key, search_type, search_value)
         print(result)
 
     else:
-        print("Debes especificar si deseas buscar en VirusTotal (--vt) o MalwareBazaar (--mb).")
+        print("you must specify if you would like to use (--vt) or MalwareBazaar (--mb).")
         sys.exit(1)
 
 if __name__ == "__main__":
