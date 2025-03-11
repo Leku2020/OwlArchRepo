@@ -1,7 +1,13 @@
 name: Prepare and Deploy Artifact
 
+
 on:
   workflow_dispatch:  
+    inputs:
+        versionA:
+          description: 'Versión de Paquete A'
+          required: true
+          default: 'latest'
 jobs:
     prepare_deploy_artifact:
         runs-on: ubuntu-latest
