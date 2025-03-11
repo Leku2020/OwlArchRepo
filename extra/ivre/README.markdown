@@ -4,7 +4,7 @@ title: IVRE
 permalink: /ivre
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # IVRE  
 **Network Reconnaissance and Vulnerability Analysis Framework**

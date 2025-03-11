@@ -1,0 +1,64 @@
+name: Build Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/PKGBUILD'
+      - '**/.SRCINFO'
+      - '**/*.py'
+      - '**/Bookmarks'
+      - '**/*.desktop'
+      - '**/*.sh'
+      - '**/*.png'
+      - '**/COPYING'
+      - '**/*.install'
+      - '**/*.patch'
+      - '**/*.service'
+      - '**/*.policy'
+      - '**/*.toml'
+      - '**/*.default'
+      - '**/*.timer'
+      - '**/*.asc'
+      - '**/*.sysusers'
+      - '**/*.tmpfiles.conf'
+  workflow_dispatch:
+
+jobs:
+  build_packages:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install dependencies
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm base-devel git && \
+          mkdir -p $GITHUB_WORKSPACE/output_dir
+
+      # Step 3: Build packages using makepkg
+      - name: Build packages
+        run: |
+          find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
+            dir=$(dirname "$PKGBUILD")
+            echo "Building package in $dir"
+            cd "$dir" && makepkg -s --noconfirm --skippgpcheck
+            mv *.pkg.tar.zst $GITHUB_WORKSPACE/output_dir/
+            cd -
+          done
+          ls $GITHUB_WORKSPACE/output_dir
+
+      # Step 4: Upload packages to GitHub
+      - name: Upload packages to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages_artifact-${{ github.sha }}
+          path: $GITHUB_WORKSPACE/output_dir
+          if-no-files-found: error

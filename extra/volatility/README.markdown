@@ -4,7 +4,7 @@ title: Volatility
 permalink: /volatility
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Volatility  
 **Memory Forensics and Analysis Framework**

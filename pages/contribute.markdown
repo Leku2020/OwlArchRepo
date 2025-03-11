@@ -4,7 +4,7 @@ title: Contribute
 permalink: /contribute
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Contributing to OwlArch Package Repository
 
@@ -46,7 +46,7 @@ Thank you for contributing! Follow these guidelines to maintain package quality 
     permalink: /title
     ---
 
-    [🔙 Go back home](/)
+    [🔙 Go back home](/owlArchRepo/)
 
     # Title
 

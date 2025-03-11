@@ -1,10 +1,6 @@
 name: Build PKGBUILDs and deploy pages
 
 on:
-  push:
-    branches:
-      - main
-      - 'feature/**'
   workflow_dispatch:
 
 jobs:

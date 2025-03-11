@@ -4,16 +4,31 @@ title: About
 permalink: /about/
 ---
 
-OwlArch is a package repository for Arch Linux. Here, you'll find a collection of customized packages and useful tools to enhance your Arch Linux experience.
+[🔙 Go back home](/owlArchRepo/)
+
+OwlArch is a package repository for the OwlArch distribution. Here, you'll find a collection of customized packages and useful tools to enhance your Arch Linux experience.
+
+## Key Features
+- Automated package generation via GitHub Actions
+- Privacy-focused browser and network analysis tools included
 
 ## More Information
 
 You can find more details about customizing your Jekyll theme, as well as basic Jekyll usage documentation, at [jekyllrb.com](https://jekyllrb.com/).
 
+## Documentation & Resources
+For build instructions, tool usage guides, and analysis workflows:  
+[OwlArchRepo](https://github.com/Leku2020/owlArchRepo)
+
 ## Source Code
+- **Distribution Repository**:  
+  [OwlArch Documentation](https://leku2020.github.io/OwlArch)
+  Contains build configurations and automation workflows
 
-The source code for OwlArchRepo is available on GitHub:  
-[OwlArch](https://github.com/leku2020/owlArchRepo)  
+- **Repository Documentation**:  
+  [OwlArchRepo Website](https://leku2020.github.io/owlArchRepo)  
+  Hosts documentation and repo information
 
-The source code for Jekyll is available on GitHub:  
-[jekyll](https://github.com/jekyll/jekyll)  
+- **Web Documentation**:  
+  [OwlArch Website](https://leku2020.github.io/OwlArch)  
+  Hosts documentation and release information

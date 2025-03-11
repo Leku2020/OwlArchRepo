@@ -4,7 +4,7 @@ title: Radare
 permalink: /radare
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Radare
 **Binary Analysis and Reverse Engineering Toolkit**

@@ -40,4 +40,3 @@ package() {
   cd ${srcdir}/${pkgname}/bindings/python
   python setup.py install --root ${pkgdir}
 }
-

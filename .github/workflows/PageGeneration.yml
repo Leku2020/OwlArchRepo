@@ -1,0 +1,56 @@
+name: Build Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.markdown'
+      - 'pages/**'
+  workflow_dispatch:
+
+jobs:
+    build_pages:
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+    
+          - name: Setup Pages
+            uses: actions/configure-pages@v5
+    
+          - name: Install Ruby and Bundler
+            uses: ruby/setup-ruby@v1
+            with:
+              ruby-version: '3.0'
+              bundler-cache: true
+    
+          - name: Install Dependencies
+            run: |
+              cd pages
+              bundle install  
+              cd ..
+    
+          - name: Copy markdown files from extra and ownSoftware to pages
+            run: |
+              find extra ownSoftware -type f -name "*.markdown" -exec sh -c '
+                for file; do
+                  # Conserva la estructura de carpetas relativa
+                  dest="pages/${file%/*}/"
+                  mkdir -p "$dest"
+                  cp "$file" "$dest"
+                done
+              ' sh {} +
+    
+          - name: Build with Jekyll
+            uses: actions/jekyll-build-pages@v1
+            with:
+              source: ./pages
+              destination: ./output_dir
+    
+          - name: Upload artifact-${{ github.sha }}
+            uses: actions/upload-pages-artifact@v3
+            with: 
+              name: pages_artifact
+              path: ./output_dir

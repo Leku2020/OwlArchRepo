@@ -1,0 +1,17 @@
+name: Prepare and Deploy Artifact
+
+on:
+  workflow_dispatch:  
+jobs:
+    prepare_deploy_artifact:
+        runs-on: ubuntu-latest
+        steps:
+          # Step 2: Download the artifact generated in build_packages into ./build_packages
+          - name: Download Paquete A
+            uses: actions/download-artifact@v3
+            with:
+              name: ${{ github.event.inputs.versionA }}
+              path: pipeline-final/paqueteA/
+          - name: List
+            run: |
+              ls pipeline-final/paqueteA/

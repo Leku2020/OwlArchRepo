@@ -1,10 +1,10 @@
 ---
 layout: software
 title: The Harvester
-permalink: /theHarvester
+permalink: /theharvester
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # The Harvester  
 **OSINT Tool for Domain and Email Discovery**

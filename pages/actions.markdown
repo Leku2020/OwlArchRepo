@@ -4,7 +4,7 @@ title: Actions
 permalink: /actions
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # GitHub Actions Pipeline for Building PKGBUILDs and Deploying Pages
 

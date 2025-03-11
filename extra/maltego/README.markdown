@@ -4,7 +4,7 @@ title: Maltego
 permalink: /maltego
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Maltego - Intelligence and Data Analysis Tool
 

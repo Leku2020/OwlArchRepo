@@ -4,7 +4,7 @@ title: Frida
 permalink: /frida
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Frida
 

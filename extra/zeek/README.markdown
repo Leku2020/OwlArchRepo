@@ -4,7 +4,7 @@ title: Zeek
 permalink: /zeek
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Zeek  
 **Network Traffic Monitoring and Analysis Framework**

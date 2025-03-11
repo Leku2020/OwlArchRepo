@@ -4,7 +4,7 @@ title: pwndbg
 permalink: /pwndbg
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Pwndbg
 
