@@ -56,7 +56,7 @@ jobs:
           ls $GITHUB_WORKSPACE/output_dir
 
       # Step 4: Upload packages to GitHub
-      - name: Upload packages to GitHub
+      - name: Upload packages to GitHub-${{ github.sha }}
         uses: actions/upload-artifact@v4
         with:
           name: packages_artifact-${{ github.sha }}

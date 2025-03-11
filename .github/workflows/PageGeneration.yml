@@ -52,5 +52,5 @@ jobs:
           - name: Upload artifact-${{ github.sha }}
             uses: actions/upload-pages-artifact@v3
             with: 
-              name: pages_artifact
+              name: pages_artifact-${{ github.sha }}
               path: ./output_dir
