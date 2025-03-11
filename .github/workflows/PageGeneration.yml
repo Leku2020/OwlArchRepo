@@ -50,7 +50,7 @@ jobs:
               destination: ./output_dir
     
           - name: Upload artifact-${{ github.sha }}
-            uses: actions/upload-pages-artifact@v4
+            uses: actions/upload-artifact@v4
             with: 
               name: pages_artifact-${{ github.sha }}
               path: ./output_dir
