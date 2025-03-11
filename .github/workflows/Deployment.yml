@@ -8,7 +8,7 @@ jobs:
         steps:
           # Step 2: Download the artifact generated in build_packages into ./build_packages
           - name: Download Paquete A
-            uses: actions/download-artifact@v3
+            uses: actions/download-artifact@v4
             with:
               name: ${{ github.event.inputs.versionA }}
               path: pipeline-final/paqueteA/
