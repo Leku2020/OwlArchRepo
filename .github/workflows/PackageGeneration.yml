@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && \
           chown -R builder:builder $GITHUB_WORKSPACE/output_dir
-          ls $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE/ownSoftware/OwlSearch
           su - builder -c '
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=$(dirname "$PKGBUILD")
