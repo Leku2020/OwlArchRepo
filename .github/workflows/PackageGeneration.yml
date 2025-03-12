@@ -44,16 +44,29 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
           echo "Dependencies installed and directories created"
           
-      # Step 3: Build packages using makepkg
+      # Step 3: Create non-root user
+      - name: Create non-root user
+        run: |
+          pacman -Sy --noconfirm sudo && \
+          useradd -m builder && \
+          echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+      # Step 4: Build packages
       - name: Build packages
         run: |
-          find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
-            dir=$(dirname "$PKGBUILD")
-            echo "Building package in $dir"
-            cd "$dir" && makepkg -s --noconfirm --skippgpcheck
-            mv *.pkg.tar.* $GITHUB_WORKSPACE/output_dir/pkgs/x86_64/
-            cd -
-          done
+          mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && \
+          chown -R builder:builder $GITHUB_WORKSPACE/output_dir
+
+          su - builder -c '
+            find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
+              dir=$(dirname "$PKGBUILD")
+              echo "Building package in $dir"
+              cd "$dir" && makepkg -s --noconfirm --skippgpcheck
+              mv *.pkg.tar.* $GITHUB_WORKSPACE/output_dir/pkgs/x86_64/
+              cd -
+            done
+          '
+
           ls -l $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
           echo "Packages created successfully"
           
