@@ -21,8 +21,9 @@ jobs:
             uses: actions/download-artifact@v4
             with:
               name: ${{ github.event.inputs.PageName }}
+              github-token: ${{ secrets.GITHUB_PAT }}
               path: pages
-              repository: Leku2020/owlArchRepo
+              repository: ${{ github.repository }}
               run-id: ${{ github.event.inputs.PagePipelineID }}
           - name: List
             run: |
