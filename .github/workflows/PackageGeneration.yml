@@ -57,7 +57,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
           cd $GITHUB_WORKSPACE
           su - builder -c '
-            export GITHUB_WORKSPACE=$GITHUB_WORKSPACE
+            export GITHUB_WORKSPACE=\$GITHUB_WORKSPACE
             ls $GITHUB_WORKSPACE
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=$(dirname "$PKGBUILD")
