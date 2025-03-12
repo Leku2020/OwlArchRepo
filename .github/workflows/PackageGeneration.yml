@@ -55,7 +55,7 @@ jobs:
       - name: Build packages
         run: |
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && \
-          chown -R builder:builder $GITHUB_WORKSPACE/output_dir
+          chown -R builder:builder $GITHUB_WORKSPACE
           ls $GITHUB_WORKSPACE/ownSoftware/OwlSearch
           su - builder -c '
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
