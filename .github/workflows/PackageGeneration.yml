@@ -55,6 +55,8 @@ jobs:
       - name: Build packages
         run: |
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
+          chown -R builder:builder $GITHUB_WORKSPACE && \
+          chmod -R u+rwx $GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
           su - builder -c "
             export GITHUB_WORKSPACE=\\$GITHUB_WORKSPACE && \
