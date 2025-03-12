@@ -57,7 +57,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
 
           su - builder -c '
-            ls .
+            ls
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=$(dirname "$PKGBUILD")
               echo "Building package in $dir"
