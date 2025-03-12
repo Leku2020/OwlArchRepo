@@ -58,7 +58,8 @@ jobs:
           cd $GITHUB_WORKSPACE
           pwd
           su - builder -c '
-            ls
+            export GITHUB_WORKSPACE=$GITHUB_WORKSPACE
+            ls $GITHUB_WORKSPACE
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=$(dirname "$PKGBUILD")
               echo "Building package in $dir"
