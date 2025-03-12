@@ -4,8 +4,12 @@ name: Prepare and Deploy Artifact
 on:
   workflow_dispatch:  
     inputs:
-        versionA:
-          description: 'Versión de Paquete A'
+        PageName:
+          description: 'Page Name'
+          required: true
+          default: 'latest'
+        PagePipelineID:
+          description: 'Page Pipeline ID'
           required: true
           default: 'latest'
 jobs:
@@ -16,8 +20,10 @@ jobs:
           - name: Download Paquete A
             uses: actions/download-artifact@v4
             with:
-              name: ${{ github.event.inputs.versionA }}
-              path: pipeline-final/paqueteA/
+              name: ${{ github.event.inputs.PageName }}
+              path: pages
+              repository: Leku2020/owlArchRepo
+              run-id: ${{ github.event.inputs.PagePipelineID }}
           - name: List
             run: |
-              ls pipeline-final/paqueteA/
+              ls pages
