@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
           cd $GITHUB_WORKSPACE
-          su - builder -c '
+          su - builder -c "
             export GITHUB_WORKSPACE=\$GITHUB_WORKSPACE
             ls $GITHUB_WORKSPACE
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
@@ -66,7 +66,7 @@ jobs:
               mv *.pkg.tar.* $GITHUB_WORKSPACE/output_dir/pkgs/x86_64/
               cd -
             done
-          '
+          ""
 
           ls -l $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
           echo "Packages created successfully"
