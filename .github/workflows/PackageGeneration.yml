@@ -57,8 +57,8 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && \
           chown -R builder:builder $GITHUB_WORKSPACE
           chmod -R +rX $GITHUB_WORKSPACE
-          ls $GITHUB_WORKSPACE/ownSoftware/OwlSearch
           su - builder -c '
+            ls $GITHUB_WORKSPACE/ownSoftware/OwlSearch
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=$(dirname "$PKGBUILD")
               echo "Building package in $dir"
