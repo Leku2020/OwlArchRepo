@@ -12,11 +12,19 @@ on:
           description: 'Page Pipeline ID'
           required: true
           default: 'latest'
+        PackageName:
+          description: 'Package Name'
+          required: true
+          default: 'latest'
+        PackagePipelineID:
+          description: 'Package Pipeline ID'
+          required: true
+          default: 'latest'
 jobs:
     prepare_deploy_artifact:
         runs-on: ubuntu-latest
         steps:
-          # Step 2: Download the artifact generated in build_packages into ./build_packages
+          # Step 1: Download the artifact generated in PageGeneration into pages
           - name: Download Paquete A
             uses: actions/download-artifact@v4
             with:
@@ -25,6 +33,16 @@ jobs:
               path: pages
               repository: ${{ github.repository }}
               run-id: ${{ github.event.inputs.PagePipelineID }}
+          # Step 2: Download the artifact generated in build_packages into ./build_packages
+          - name: Download Paquete A
+            uses: actions/download-artifact@v4
+            with:
+              name: ${{ github.event.inputs.PageName }}
+              github-token: ${{ secrets.GITHUB_TOKEN }}
+              path: pages
+              repository: ${{ github.repository }}
+              run-id: ${{ github.event.inputs.PagePipelineID }}      
+          
           - name: List
             run: |
               ls pages
