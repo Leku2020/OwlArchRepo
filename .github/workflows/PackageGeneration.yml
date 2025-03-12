@@ -108,5 +108,5 @@ jobs:
         run: |
           echo "Run ID:"
           echo ${{github.run_id}}
-          echo "Pages hash:"
-          echo pages_artifact-${{ github.sha }}
+          echo "Package hash:"
+          echo packages_artifact-${{ github.sha }}
