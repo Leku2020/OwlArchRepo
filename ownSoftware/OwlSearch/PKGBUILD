@@ -6,7 +6,7 @@ arch=('any')
 url="https://github.com/Leku2020/owlArchRepo/tree/main/ownSoftware/OwlSearch"
 license=('MIT')
 depends=('python' 'python-requests')
-source=("virus-malware-search.py")
+source=("owlSearch.py")
 sha256sums=("SKIP")
 
 package() {
