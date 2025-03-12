@@ -21,7 +21,7 @@ jobs:
             uses: actions/download-artifact@v4
             with:
               name: ${{ github.event.inputs.PageName }}
-              github-token: ${{ secrets.GITHUB_PAT }}
+              github-token: ${{ secrets.GITHUB_TOKEN }}
               path: pages
               repository: ${{ github.repository }}
               run-id: ${{ github.event.inputs.PagePipelineID }}
