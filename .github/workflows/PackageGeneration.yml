@@ -55,7 +55,8 @@ jobs:
       - name: Build packages
         run: |
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
-
+          cd $GITHUB_WORKSPACE
+          pwd
           su - builder -c '
             ls
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
