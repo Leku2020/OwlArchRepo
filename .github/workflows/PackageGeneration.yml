@@ -56,7 +56,6 @@ jobs:
         run: |
           mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
           cd $GITHUB_WORKSPACE
-          pwd
           su - builder -c '
             export GITHUB_WORKSPACE=$GITHUB_WORKSPACE
             ls $GITHUB_WORKSPACE
