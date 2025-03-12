@@ -54,11 +54,10 @@ jobs:
       # Step 4: Build packages
       - name: Build packages
         run: |
-          mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && \
-          chown -R builder:builder $GITHUB_WORKSPACE
-          chmod -R +rX $GITHUB_WORKSPACE
+          mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
+
           su - builder -c '
-            ls $GITHUB_WORKSPACE/ownSoftware/OwlSearch
+            ls .
             find $GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=$(dirname "$PKGBUILD")
               echo "Building package in $dir"
