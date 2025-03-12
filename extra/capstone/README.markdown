@@ -4,7 +4,7 @@ title: Capstone
 permalink: /capstone
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # Capstone
 

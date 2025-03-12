@@ -4,7 +4,7 @@ title: OwlSearch
 permalink: /owlsearch
 ---
 
-[🔙 Go back home](/)
+[🔙 Go back home](/owlArchRepo/)
 
 # OwlSearch
 
