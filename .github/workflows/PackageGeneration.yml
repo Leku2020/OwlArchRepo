@@ -37,12 +37,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Install dependencies
-      - name: Install dependencies
+      # Step 2: Install dependencies and prepare directories
+      - name: Install dependencies and prepare directories
         run: |
-          pacman -Syu --noconfirm base-devel git && \
-          mkdir -p $GITHUB_WORKSPACE/output_dir
-
+          pacman -Syu --noconfirm base-devel git
+          mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
+          echo "Dependencies installed and directories created"
+          
       # Step 3: Build packages using makepkg
       - name: Build packages
         run: |
@@ -50,15 +51,45 @@ jobs:
             dir=$(dirname "$PKGBUILD")
             echo "Building package in $dir"
             cd "$dir" && makepkg -s --noconfirm --skippgpcheck
-            mv *.pkg.tar.zst $GITHUB_WORKSPACE/output_dir/
+            mv *.pkg.tar.* $GITHUB_WORKSPACE/output_dir/pkgs/x86_64/
             cd -
           done
-          ls $GITHUB_WORKSPACE/output_dir
+          ls -l $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
+          echo "Packages created successfully"
+          
+      # Step 4: Run repo-add to create the repository database
+      - name: Create repository database
+        run: |
+          pacman -Sy --noconfirm pacman-contrib && echo "Pacman updated"
+      
+          # Regenerating DB
+          cd $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && repo-add owlArchRepo.db.tar.gz && echo "The DB has been created"
+      
+          # Adding valid packages to the DB
+          find . -type f -name "*.pkg.tar.*" | while read pkg; do
+            echo "Working with: $pkg"
+      
+            # Verify if the package is valid
+            if tar -tf "$pkg" &> /dev/null; then
+              echo "Package valid: $pkg"
+              repo-add owlArchRepo.db.tar.gz "$pkg" && echo "Package added: $pkg"
+            else
+              echo "Removing invalid package: $pkg"
+              rm -f "$pkg"
+            fi
+          done
 
       # Step 4: Upload packages to GitHub
       - name: Upload packages to GitHub-${{ github.sha }}
         uses: actions/upload-artifact@v4
         with:
           name: packages_artifact-${{ github.sha }}
-          path: $GITHUB_WORKSPACE/output_dir
+          path: output_dir
           if-no-files-found: error
+          
+      - name: Job ID and Package hash
+        run: |
+          echo "Run ID:"
+          echo ${{github.run_id}}
+          echo "Pages hash:"
+          echo pages_artifact-${{ github.sha }}
