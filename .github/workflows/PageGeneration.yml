@@ -54,3 +54,10 @@ jobs:
             with: 
               name: pages_artifact-${{ github.sha }}
               path: ./output_dir
+
+          - name: Job ID and Package hash
+            run: |
+              echo "Run ID:"
+              echo ${{github.run_id}}
+              echo "Pages hash:"
+              echo pages_artifact-${{ github.sha }}
