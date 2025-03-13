@@ -6,7 +6,7 @@ pkgdesc="Herramienta para buscar información en VirusTotal, MalwareBazaar, Abus
 arch=('any')
 url="https://github.com/Leku2020/owlArchRepo/tree/main/ownSoftware/OwlSearch"
 license=('MIT')
-depends=('python' 'python-requests' 'dos2unix')
+depends=('python3' 'python-requests' 'dos2unix' 'python-pip')
 source=("owlSearch.py" "config.ini")  # Archivos fuente
 sha256sums=('SKIP' 'SKIP')  # Calcula los hashes si es necesario
 
@@ -27,6 +27,7 @@ prepare() {
 
 # Función de empaquetado
 package() {
+    pip install argparse configparser os requests sys json datetime
     # Instalar el script principal como ejecutable
     install -Dm755 "$srcdir/owlSearch.py" "$pkgdir/usr/bin/owlSearch"
 
