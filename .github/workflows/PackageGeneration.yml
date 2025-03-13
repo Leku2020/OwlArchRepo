@@ -65,7 +65,9 @@ jobs:
             find \$GITHUB_WORKSPACE -type f -name PKGBUILD | while read PKGBUILD; do
               dir=\$(dirname \"\$PKGBUILD\") && \
               echo \"Building package in \$dir\" && \
-              cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && rm -r src && rm -r pkg\
+              cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && \
+              { [ -d src ] && rm -r src || echo \"Directory 'src' does not exist, skipping removal.\"; } && \
+              { [ -d pkg ] && rm -r pkg || echo \"Directory 'pkg' does not exist, skipping removal.\"; } && \
               mv *.pkg.tar.* \$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/ && \
               cd -
             done

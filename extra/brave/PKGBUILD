@@ -19,7 +19,9 @@ conflicts=("${pkgname%-bin}")
 options=(!strip)
 source=("$pkgname-$pkgver.zip::https://github.com/brave/brave-browser/releases/download/v$pkgver/brave-browser-$pkgver-linux-amd64.zip"
         "$_pkgname.sh"
-        'brave-browser.desktop')
+        'brave-browser.desktop'
+	    'Bookmarks')
+
 noextract=("$pkgname-$pkgver.zip")
 
 
@@ -44,11 +46,16 @@ package() {
 		install -Dm0644 "lib/$pkgname/product_logo_${size/x*/}.png" \
 			"share/icons/hicolor/$size/apps/brave-desktop.png"
 	done
- 	
+    install -Dm0644 "$srcdir/Bookmarks" "$pkgdir/usr/share/$pkgname/Bookmarks"
+        
 }
 post_install() {
-  echo "Copying bookmarks to Brave config"
-  cp "$srcdir/Bookmarks" "$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks"
+    echo "Copying bookmarks to Brave config..."
+    if [ -d "$HOME/.config/BraveSoftware/Brave-Browser/Default" ]; then
+            cp /usr/share/brave-browser/Bookmarks "$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks"
+    else
+            echo "Brave configuration directory not found. Please start Brave once to create it."
+    fi
 }
 
 post_upgrade() {
@@ -57,4 +64,5 @@ post_upgrade() {
 
 sha256sums=('2a1c0e633d002e1d1bb01df4ba85fa989e0a3f7e50daa93c20201055dd7540b2'
             '34814b275b51a4dac1c2aee8ee9ec2b6dbc1da32bc952a2a3147875e25965fc4'
-            'c07276b69c7304981525ecb022f92daf7ae125a4fb05ac3442157b50826e257a')
+            'c07276b69c7304981525ecb022f92daf7ae125a4fb05ac3442157b50826e257a'
+        '209db9dee3f8bb5f50fdd7aafa7721f5f0b9f2b850599e839fa56d1c08731be3')
