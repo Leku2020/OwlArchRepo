@@ -21,8 +21,8 @@ pacman -S owlSearch
 Ejecuta el script con los siguientes parámetros según el tipo de búsqueda que desees realizar.
 
 ```sh
-virus-malware-search --vt --hash <HASH>
-virus-malware-search --mb --tag <TAG>
+owlSearch --vt --hash <HASH>
+owlSearch --mb --tag <TAG>
 ```
 
 ### Opciones disponibles
