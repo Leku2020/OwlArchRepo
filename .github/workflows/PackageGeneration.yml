@@ -36,6 +36,46 @@ jobs:
       # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
+      # Paso 2: Descargar artefacto previo (si existe)
+
+      - name: Download previous artifact
+        id: download-artifact
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const artifacts = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+
+            // Filtrar artefactos por nombre
+            const matchingArtifact = artifacts.data.artifacts.find(artifact =>
+              artifact.name.startsWith('package_artifact-')
+            );
+
+            if (matchingArtifact) {
+              core.setOutput('artifact_id', matchingArtifact.id);
+              core.setOutput('artifact_name', matchingArtifact.name);
+            } else {
+              core.setOutput('artifact_id', '');
+              core.setOutput('artifact_name', '');
+            }
+
+      # Paso 3: Descargar el artefacto si se encontró uno
+      - name: Download artifact if exists
+        if: steps.download-artifact.outputs.artifact_id != ''
+        uses: actions/download-artifact@v4
+        with:
+          artifact_id: ${{ steps.download-artifact.outputs.artifact_id }}
+          path: ${{ github.workspace }}/downloaded-artifact
+      
+      - name: Download Pages
+        uses: actions/download-artifact@v4
+        with:
+          artifact_id: ${{ steps.download-artifact.outputs.artifact_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ${{ github.workspace }}/downloaded-artifact
+          repository: ${{ github.repository }}
 
       # Step 2: Install dependencies and prepare directories
       - name: Install dependencies and prepare directories
