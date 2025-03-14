@@ -4,7 +4,7 @@ title: SpiderFoot
 permalink: /spiderfoot
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # SpiderFoot  
 **OSINT and Information Gathering Tool**

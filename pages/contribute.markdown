@@ -4,7 +4,7 @@ title: Contribute
 permalink: /contribute
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # Contributing to OwlArch Package Repository
 
@@ -46,7 +46,7 @@ Thank you for contributing! Follow these guidelines to maintain package quality 
     permalink: /title
     ---
 
-    [🔙 Go back home](/owlArchRepo/)
+    [🔙 Go back home](/OwlArchRepo/)
 
     # Title
 
@@ -117,7 +117,7 @@ docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c "
 "
 
 # Verify repository structure
-repo-add pkgs/x86_64/owlArchRepo.db.tar.gz *.pkg.tar.zst
+repo-add pkgs/x86_64/OwlArchRepo.db.tar.gz *.pkg.tar.zst
 ```
 
 ## Common Issues
@@ -134,18 +134,18 @@ repo-add pkgs/x86_64/owlArchRepo.db.tar.gz *.pkg.tar.zst
 
 On `main` branch push:
 1. Builds all PKGBUILDs in `extra/`
-2. Generates repository database (`owlArchRepo.db`)
+2. Generates repository database (`OwlArchRepo.db`)
 3. Deploys documentation to GitHub Pages
 4. Packages become immediately available via:  
    ```ini
-   [owlArchRepo]
-   Server = https://leku2020.github.io/owlArchRepo/pkgs/x86_64
+   [OwlArchRepo]
+   Server = https://leku2020.github.io/OwlArchRepo/pkgs/x86_64
    ```
 
 ## Need Help?
 
-- Check [GitHub Actions logs](https://github.com/Leku2020/owlArchRepo/actions)
-- Ask in [Discussions](https://github.com/Leku2020/owlArchRepo/discussions)
-- Review existing [PKGBUILD examples](https://github.com/Leku2020/owlArchRepo/tree/main/extra)
+- Check [GitHub Actions logs](https://github.com/Leku2020/OwlArchRepo/actions)
+- Ask in [Discussions](https://github.com/Leku2020/OwlArchRepo/discussions)
+- Review existing [PKGBUILD examples](https://github.com/Leku2020/OwlArchRepo/tree/main/extra)
 
 Let's keep the OSINT/malware analysis community tools sharp! 🦉🔍

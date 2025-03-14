@@ -4,7 +4,7 @@ title: Brave
 permalink: /brave
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # Brave Browser
 

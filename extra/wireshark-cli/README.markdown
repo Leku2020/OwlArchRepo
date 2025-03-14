@@ -4,7 +4,7 @@ title: Wireshark
 permalink: /wireshark
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # Wireshark  
 **Network Protocol Analyzer**

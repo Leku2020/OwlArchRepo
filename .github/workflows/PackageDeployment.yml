@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build_packages_artifact
-          path: /home/runner/work/owlArchRepo/owlArchRepo/output_dir
+          path: /home/runner/work/OwlArchRepo/OwlArchRepo/output_dir
           if-no-files-found: error
 
   build_pages:
@@ -136,7 +136,7 @@ jobs:
             echo "Pacman actualizado" && \
 
             # Crear la base de datos desde cero
-            repo-add output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz && \
+            repo-add output_dir/pkgs/x86_64/OwlArchRepo.db.tar.gz && \
             echo "Base de datos creada" && \
             
             # Añadir los paquetes válidos a la base de datos
@@ -149,7 +149,7 @@ jobs:
               # Verificar si el paquete es válido
               if tar -I zstd -tf "$pkg" &> /dev/null; then \
                 echo "Paquete válido: $pkg"; \
-                repo-add  /workspace/output_dir/pkgs/x86_64/owlArchRepo.db.tar.gz "$pkg" && \
+                repo-add  /workspace/output_dir/pkgs/x86_64/OwlArchRepo.db.tar.gz "$pkg" && \
                 echo "Paquete añadido: $pkg"; \
               else \
                 echo "Saltando paquete inválido: $pkg"; \
@@ -233,5 +233,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: modified_packages_artifact
-          path: /home/runner/work/owlArchRepo/owlArchRepo/output_dir
+          path: /home/runner/work/OwlArchRepo/OwlArchRepo/output_dir
           if-no-files-found: error

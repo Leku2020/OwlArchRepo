@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rm -R /owlArchRepo
-cp -R /home/osArch/Desktop/owlArch/owlArchRepo /
-docker run --rm -v /owlArchRepo:/workspace:z archlinux:latest /bin/bash -c "
+rm -R /OwlArchRepo
+cp -R /home/osArch/Desktop/owlArch/OwlArchRepo /
+docker run --rm -v /OwlArchRepo:/workspace:z archlinux:latest /bin/bash -c "
 	    echo 'Base:'
 	    ls -R .
 	    echo 'Workspace:'
@@ -20,22 +20,22 @@ docker run --rm -v /owlArchRepo:/workspace:z archlinux:latest /bin/bash -c "
             '"
 
 
-mkdir -p "/owlArchRepo/pkgs/x86_64"
-find find /owlArchRepo -type f -name "*.pkg.tar.zst" | while read file; do
-	echo "Copying: $file to /owlArchRepo/pkgs/x86_64/"
-	cp "$file" "/owlArchRepo/pkgs/x86_64/"
+mkdir -p "/OwlArchRepo/pkgs/x86_64"
+find find /OwlArchRepo -type f -name "*.pkg.tar.zst" | while read file; do
+	echo "Copying: $file to /OwlArchRepo/pkgs/x86_64/"
+	cp "$file" "/OwlArchRepo/pkgs/x86_64/"
 done
 
-docker run --rm -v /owlArchRepo:/workspace:z -w /workspace archlinux:latest /bin/bash -c '
+docker run --rm -v /OwlArchRepo:/workspace:z -w /workspace archlinux:latest /bin/bash -c '
             pacman -Sy --noconfirm pacman-contrib && \
             echo "Pacman actualizado" && \
             
             # Eliminar la base de datos existente si existe
-            rm -f /workspace/pkgs/x86_64/owlArchRepo.db.tar.gz && \
+            rm -f /workspace/pkgs/x86_64/OwlArchRepo.db.tar.gz && \
             echo "Archivo de base de datos eliminado" && \
             
             # Crear la base de datos desde cero
-            repo-add /workspace/pkgs/x86_64/owlArchRepo.db.tar.gz && \
+            repo-add /workspace/pkgs/x86_64/OwlArchRepo.db.tar.gz && \
             echo "Base de datos creada" && \
             
             # Añadir los paquetes válidos a la base de datos
@@ -48,7 +48,7 @@ docker run --rm -v /owlArchRepo:/workspace:z -w /workspace archlinux:latest /bin
               # Verificar si el paquete es válido
               if tar -I zstd -tf "$pkg" &> /dev/null; then \
                 echo "Paquete válido: $pkg"; \
-                repo-add /workspace/pkgs/x86_64/owlArchRepo.db.tar.gz "$pkg" && \
+                repo-add /workspace/pkgs/x86_64/OwlArchRepo.db.tar.gz "$pkg" && \
                 echo "Paquete añadido: $pkg"; \
               else \
                 echo "Saltando paquete inválido: $pkg"; \

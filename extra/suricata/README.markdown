@@ -4,7 +4,7 @@ title: Suricata
 permalink: /suricata
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # Suricata  
 **Intrusion Detection and Prevention System (IDS/IPS)**

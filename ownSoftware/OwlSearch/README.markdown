@@ -4,7 +4,7 @@ title: OwlSearch
 permalink: /owlsearch
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # OwlSearch
 
@@ -60,7 +60,7 @@ Este proyecto está bajo la licencia MIT.
 
 ## Contribuciones
 
-¡Las contribuciones son bienvenidas! Si deseas mejorar el script, abre un issue o haz un pull request en [GitHub](https://github.com/Leku2020/owlArchRepo/tree/main/ownSoftware/OwlSearch).
+¡Las contribuciones son bienvenidas! Si deseas mejorar el script, abre un issue o haz un pull request en [GitHub](https://github.com/Leku2020/OwlArchRepo/tree/main/ownSoftware/OwlSearch).
 
 <div style="display: flex; justify-content: space-between;">
   <a href="zeek">🔙 Zeek</a>

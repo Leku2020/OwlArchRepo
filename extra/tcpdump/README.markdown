@@ -4,7 +4,7 @@ title: TCPDump
 permalink: /tcpdump
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # TCPDump
 **Network Sniffer and Packet Analyzer**

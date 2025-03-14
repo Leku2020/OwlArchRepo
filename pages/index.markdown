@@ -80,9 +80,9 @@ To install packages from this repository on your OwlArch system, follow these st
    Open `/etc/pacman.conf` and append the following lines:
 
    ```ini
-   [owlArchRepo]
+   [OwlArchRepo]
    SigLevel = Optional TrustAll
-   Server = https://leku2020.github.io/owlArchRepo/pkgs/x86_64
+   Server = https://leku2020.github.io/OwlArchRepo/pkgs/x86_64
    ```
 
 ## Distribution
@@ -96,7 +96,7 @@ The repository is built automatically using a GitHub Actions pipeline that follo
 1. Compiles packages from `PKGBUILD` files.
 2. Publishes the generated packages to the GitHub repository.
 3. Builds the documentation using Jekyll.
-4. Generates and updates the `owlArchRepo` package repository.
+4. Generates and updates the `OwlArchRepo` package repository.
 5. Deploys the documentation and packages to GitHub Pages.
 
 For extended documentation, press [here](actions)
@@ -108,7 +108,7 @@ Contributions are welcome! To contribute to the repository:
 1. Fork the repository on GitHub.
 2. Clone your fork locally:
    ```sh
-   git clone https://github.com/Leku2020/owlArchRepo.git
+   git clone https://github.com/Leku2020/OwlArchRepo.git
    ```
 3. Create a new branch for your changes:
    ```sh
@@ -122,5 +122,5 @@ For an extended document explaining the contributing rules and steps please pres
 
 ## Discussion Forum
 
-If you have questions, suggestions, or want to discuss the development of this project, join the official discussion forum on [GitHub Discussions](https://github.com/Leku2020/owlArchRepo/discussions).
+If you have questions, suggestions, or want to discuss the development of this project, join the official discussion forum on [GitHub Discussions](https://github.com/Leku2020/OwlArchRepo/discussions).
 

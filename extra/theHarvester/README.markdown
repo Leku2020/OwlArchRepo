@@ -4,7 +4,7 @@ title: The Harvester
 permalink: /theharvester
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # The Harvester  
 **OSINT Tool for Domain and Email Discovery**

@@ -4,7 +4,7 @@ title: GDB
 permalink: /gdb
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # GDB - GNU Debugger
 

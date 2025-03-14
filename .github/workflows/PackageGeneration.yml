@@ -122,7 +122,7 @@ jobs:
           pacman -Sy --noconfirm pacman-contrib && echo "Pacman updated"
       
           # Regenerating DB
-          cd $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && repo-add owlArchRepo.db.tar.gz && echo "The DB has been created"
+          cd $GITHUB_WORKSPACE/output_dir/pkgs/x86_64 && repo-add OwlArchRepo.db.tar.gz && echo "The DB has been created"
       
           # Adding valid packages to the DB
           find . -type f -name "*.pkg.tar.*" | while read pkg; do
@@ -131,7 +131,7 @@ jobs:
             # Verify if the package is valid
             if tar -tf "$pkg" &> /dev/null; then
               echo "Package valid: $pkg"
-              repo-add owlArchRepo.db.tar.gz "$pkg" && echo "Package added: $pkg"
+              repo-add OwlArchRepo.db.tar.gz "$pkg" && echo "Package added: $pkg"
             else
               echo "Removing invalid package: $pkg"
               rm -f "$pkg"

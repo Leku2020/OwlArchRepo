@@ -4,7 +4,7 @@ title: Python Shodan
 permalink: /shodan
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # Shodan  
 **Search Engine for Internet-Connected Devices**

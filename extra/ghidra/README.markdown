@@ -4,7 +4,7 @@ title: Ghidra
 permalink: /ghidra
 ---
 
-[🔙 Go back home](/owlArchRepo/)
+[🔙 Go back home](/OwlArchRepo/)
 
 # Ghidra
 
