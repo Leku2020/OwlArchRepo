@@ -158,9 +158,9 @@ jobs:
         run: |
           # Eliminar paquetes antiguos en output_dir que coincidan con los nombres de los directorios modificados
           cat modified_dirs.txt | while read -r dir; do
-            package_name=\$(basename "\$dir")
-            echo "Cleaning up old packages for \$package_name"
-            find "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64" -type f -name "\$package_name*.pkg.tar.*" -exec rm -f {} \;
+            package_name=$(basename "$dir")
+            echo "Cleaning up old packages for $package_name"
+            find "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64" -type f -name "${package_name}*.pkg.tar.*" -exec rm -f {} \;
           done
 
       - name: Build modified packages
