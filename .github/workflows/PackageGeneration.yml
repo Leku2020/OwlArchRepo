@@ -183,10 +183,8 @@ jobs:
               fi
               echo \"\${found_dirs[0]}\"
               dir=\"\${found_dirs[0]}\"
-              echo $dir
-              ls $dir
 
-              PKGBUILD_PATH=\"\$GITHUB_WORKSPACE/\$dir/PKGBUILD\"
+              PKGBUILD_PATH=\"\$dir/PKGBUILD\"
               if [ -f \"\$PKGBUILD_PATH\" ]; then
                 echo \"Building package in \$dir\" && \
                 cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && \
