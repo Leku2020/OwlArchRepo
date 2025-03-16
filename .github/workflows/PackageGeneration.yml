@@ -48,12 +48,6 @@ jobs:
       - name: Mark repository as safe
         run: |
           git config --global --add safe.directory /__w/OwlArchRepo/OwlArchRepo
-      - name: Detect modified paths
-        run: |
-          ls -la
-          git fetch origin main
-          git diff --name-only origin/main...HEAD > modified_paths.txt
-          cat modified_paths.txt
 
       - name: Download latest artifact
         id: download-artifact
@@ -105,6 +99,7 @@ jobs:
       - name: Detect modified paths
         if: steps.download-artifact.outputs.artifact_id != ''
         run: |
+          cd $GITHUB_WORKSPACE
           # Fetch the latest changes from the remote repository
           git fetch origin main
 
@@ -160,7 +155,7 @@ jobs:
           cat modified_dirs.txt | while read -r dir; do
             package_name=$(basename "$dir")
             echo "Cleaning up old packages for $package_name"
-            find "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64" -type f -name "${package_name}*.pkg.tar.*" -exec rm -f {} \;
+            find "$GITHUB_WORKSPACE/output_dir/pkgs/x86_64" -type f -name "${package_name}*.pkg.tar.*" -print -exec rm -f {} \;
           done
 
       - name: Build modified packages
