@@ -80,7 +80,6 @@ jobs:
       - name: Detect modified paths
         run: |
           ls -la
-          git fetch origin main
           git diff --name-only origin/main...HEAD > modified_paths.txt
           cat modified_paths.txt
 
