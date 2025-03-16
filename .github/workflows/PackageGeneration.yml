@@ -111,8 +111,8 @@ jobs:
           # Compare the last commit (HEAD) with the previous commit (HEAD^)
           git diff --name-only HEAD^ HEAD > modified_paths.txt
 
-          # Extract unique directories from the modified file paths
-          cut -d '/' -f 1-3 modified_paths.txt | sort | uniq > modified_dirs.txt
+          # Filter out .github and pages folders, then extract unique parent directories
+          grep -v -e '^\.github/' -e '^pages/' modified_paths.txt | cut -d '/' -f 1 | sort | uniq > modified_dirs.txt
 
           # Display the results
           cat modified_paths.txt
