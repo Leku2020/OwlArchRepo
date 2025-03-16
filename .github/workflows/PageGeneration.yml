@@ -39,8 +39,9 @@ jobs:
           
                 // Filter and sort artifacts by creation date
                 const matchingArtifacts = artifacts.data.artifacts
-                  .filter(artifact => artifact.name.startsWith('package_artifact-'))
+                  .filter(artifact => artifact.name.startsWith('packages_artifact-'))
                   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
                 console.log("Matching artifacts:", matchingArtifacts);
                 if (matchingArtifacts.length > 0) {
                   const latestArtifact = matchingArtifacts[0];
