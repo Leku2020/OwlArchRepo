@@ -33,6 +33,12 @@ jobs:
       options: --privileged
 
     steps:
+      # Step 2: Install dependencies and prepare directories
+      - name: Install dependencies and prepare directories
+        run: |
+          pacman -Syu --noconfirm base-devel git
+          mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
+          echo "Dependencies installed and directories created"
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -43,15 +49,11 @@ jobs:
       - name: Detect modified paths
         run: |
           ls -la
+          git fetch origin main
           git diff --name-only origin/main...HEAD > modified_paths.txt
           cat modified_paths.txt
 
-      # Step 2: Install dependencies and prepare directories
-      - name: Install dependencies and prepare directories
-        run: |
-          pacman -Syu --noconfirm base-devel git
-          mkdir -p $GITHUB_WORKSPACE/output_dir/pkgs/x86_64
-          echo "Dependencies installed and directories created"
+
 
       - name: Download latest artifact
         id: download-artifact
