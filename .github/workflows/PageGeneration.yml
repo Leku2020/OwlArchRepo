@@ -25,7 +25,32 @@ jobs:
             with:
               ruby-version: '3.0'
               bundler-cache: true
-    
+          - name: Download latest artifact
+            id: download-artifact
+            uses: actions/github-script@v6
+            with:
+              script: |
+                const artifacts = await github.rest.actions.listArtifactsForRepo({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo
+                });
+          
+                console.log("Available artifacts:", artifacts.data.artifacts);
+          
+                // Filter and sort artifacts by creation date
+                const matchingArtifacts = artifacts.data.artifacts
+                  .filter(artifact => artifact.name.startsWith('package_artifact-'))
+                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+          
+                if (matchingArtifacts.length > 0) {
+                  const latestArtifact = matchingArtifacts[0];
+                  core.setOutput('artifact_id', latestArtifact.id);
+                  core.setOutput('artifact_name', latestArtifact.name);
+                } else {
+                  core.setOutput('artifact_id', '');
+                  core.setOutput('artifact_name', '');
+                }
+                  
           - name: Install Dependencies
             run: |
               cd pages
