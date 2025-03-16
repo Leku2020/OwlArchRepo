@@ -112,7 +112,7 @@ jobs:
           git diff --name-only HEAD^ HEAD > modified_paths.txt
 
           # Filter out .github and pages folders, then extract unique parent directories
-          grep -v -e '^\.github/' -e '^pages/' modified_paths.txt | cut -d '/' -f 1 | sort | uniq > modified_dirs.txt
+          grep -v -e '^\.github/' -e '^pages/' modified_paths.txt | awk -F '/' 'NF >= 2 {print $2}' | sort | uniq > modified_dirs.txt
 
           # Display the results
           cat modified_paths.txt
