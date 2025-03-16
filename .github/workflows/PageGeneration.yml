@@ -28,6 +28,7 @@ jobs:
           - name: Download latest artifact
             id: download-artifact
             uses: actions/github-script@v6
+            continue-on-error: true
             with:
               script: |
                 const artifacts = await github.rest.actions.listArtifactsForRepo({
@@ -47,9 +48,11 @@ jobs:
                   const latestArtifact = matchingArtifacts[0];
                   core.setOutput('artifact_id', latestArtifact.id);
                   core.setOutput('artifact_name', latestArtifact.name);
+                  core.setOutput('wrokflow_run_id', latestArtifact.workflow_run.id);
                 } else {
                   core.setOutput('artifact_id', '');
                   core.setOutput('artifact_name', '');
+                  core.setOutput('wrokflow_run_id', '');
                 }
 
           - name: Download artifact if exists
@@ -57,6 +60,8 @@ jobs:
             uses: actions/download-artifact@v4
             with:
               name: ${{ steps.download-artifact.outputs.artifact_name }}
+              run-id: ${{steps.download-artifact.outputs.wrokflow_run_id }}
+
               path: ${{ github.workspace }}/downloaded-artifact
               github-token: ${{ secrets.GITHUB_TOKEN }}
               repository: ${{ github.repository }}
