@@ -58,7 +58,9 @@ jobs:
             with:
               name: ${{ steps.download-artifact.outputs.artifact_name }}
               path: ${{ github.workspace }}/downloaded-artifact
-          
+              github-token: ${{ secrets.GITHUB_TOKEN }}
+              repository: ${{ github.repository }}
+
           - name: Fallback if no artifact exists
             if: steps.download-artifact.outputs.artifact_id == ''
             run: |
