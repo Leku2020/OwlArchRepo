@@ -33,9 +33,12 @@ jobs:
       options: --privileged
 
     steps:
-      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          repository: Leku2020/OwlArchRepo
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Full clone
 
       # Step 2: Install dependencies and prepare directories
       - name: Install dependencies and prepare directories
