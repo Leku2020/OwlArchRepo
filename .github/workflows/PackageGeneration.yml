@@ -38,7 +38,13 @@ jobs:
         with:
           repository: Leku2020/OwlArchRepo
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0  # Full clone
+          fetch-depth: 2 
+          
+      - name: Detect modified paths
+        run: |
+          ls -la
+          git diff --name-only origin/main...HEAD > modified_paths.txt
+          cat modified_paths.txt
 
       # Step 2: Install dependencies and prepare directories
       - name: Install dependencies and prepare directories
@@ -76,12 +82,6 @@ jobs:
               core.setOutput('artifact_name', '');
               core.setOutput('wrokflow_run_id', '');
             }
-
-      - name: Detect modified paths
-        run: |
-          ls -la
-          git diff --name-only origin/main...HEAD > modified_paths.txt
-          cat modified_paths.txt
 
       - name: Download artifact if exists
         continue-on-error: true
