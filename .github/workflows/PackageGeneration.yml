@@ -167,6 +167,7 @@ jobs:
           su - builder -c "
             export GITHUB_WORKSPACE=\\$GITHUB_WORKSPACE && \
             echo \"GITHUB_WORKSPACE is set to \$GITHUB_WORKSPACE\" && \
+            ls \$GITHUB_WORKSPACE && \
             cat $GITHUB_WORKSPACE/modified_dirs.txt | while read dir; do
               PKGBUILD_PATH=\"\$GITHUB_WORKSPACE/\$dir/PKGBUILD\"
               if [ -f \"\$PKGBUILD_PATH\" ]; then
