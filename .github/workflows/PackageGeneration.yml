@@ -167,20 +167,21 @@ jobs:
           su - builder -c "
             export GITHUB_WORKSPACE=\\$GITHUB_WORKSPACE && \
             echo \"GITHUB_WORKSPACE is set to \$GITHUB_WORKSPACE\" && \
-            ls \$GITHUB_WORKSPACE && \
-            cat $GITHUB_WORKSPACE/modified_dirs.txt | while read dir; do
-              PKGBUILD_PATH=\"\$GITHUB_WORKSPACE/\$dir/PKGBUILD\"
-              if [ -f \"\$PKGBUILD_PATH\" ]; then
-                echo \"Building package in \$dir\" && \
-                cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && \
-                { [ -d src ] && rm -r src || echo \"Directory 'src' does not exist, skipping removal.\"; } && \
-                { [ -d pkg ] && rm -r pkg || echo \"Directory 'pkg' does not exist, skipping removal.\"; } && \
-                mv *.pkg.tar.* \$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/ && \
-                cd -
-              else
-                echo \"No PKGBUILD found in \$dir, skipping.\"
-              fi
-            done
+            find \$GITHUB_WORKSPACE -type d -exec sh -c '
+              for dir do
+                PKGBUILD_PATH=\"\$dir/PKGBUILD\"
+                if [ -f \"\$PKGBUILD_PATH\" ]; then
+                  echo \"Building package in \$dir\" && \
+                  cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && \
+                  { [ -d src ] && rm -r src || echo \"Directory 'src' does not exist, skipping removal.\"; } && \
+                  { [ -d pkg ] && rm -r pkg || echo \"Directory 'pkg' does not exist, skipping removal.\"; } && \
+                  mv *.pkg.tar.* \$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/ && \
+                  cd -
+                else
+                  echo \"No PKGBUILD found in \$dir, skipping.\"
+                fi
+              done
+            ' sh {} +
           "
 
       - name: Clean up repository database
