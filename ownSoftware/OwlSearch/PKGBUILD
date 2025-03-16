@@ -1,6 +1,6 @@
 # Metadata del paquete
 pkgname=owlSearch
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="Herramienta para buscar información en VirusTotal, MalwareBazaar, AbuseIPDB y Shodan."
 arch=('any')
