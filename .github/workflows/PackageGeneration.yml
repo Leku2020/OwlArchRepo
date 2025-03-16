@@ -99,7 +99,6 @@ jobs:
       - name: Detect modified paths
         if: steps.download-artifact.outputs.artifact_id != ''
         run: |
-          cd $GITHUB_WORKSPACE
           # Fetch the latest changes from the remote repository
           git fetch origin main
 
@@ -110,10 +109,11 @@ jobs:
           grep -v -e '^\.github/' -e '^pages/' modified_paths.txt | awk -F '/' 'NF >= 2 {print $2}' | sort | uniq > modified_dirs.txt
 
           # Display the results
-          cat modified_paths.txt
-          cat modified_dirs.txt
-
-
+          cat $GITHUB_WORKSPACE/modified_paths.txt
+          cat $GITHUB_WORKSPACE/modified_dirs.txt
+          cd $GITHUB_WORKSPACE
+          ls
+          pwd
           
       # Step 3: Create non-root user
       - name: Create non-root user
@@ -167,7 +167,7 @@ jobs:
           su - builder -c "
             export GITHUB_WORKSPACE=\\$GITHUB_WORKSPACE && \
             echo \"GITHUB_WORKSPACE is set to \$GITHUB_WORKSPACE\" && \
-            cat modified_dirs.txt | while read dir; do
+            cat $GITHUB_WORKSPACE/modified_dirs.txt | while read dir; do
               PKGBUILD_PATH=\"\$GITHUB_WORKSPACE/\$dir/PKGBUILD\"
               if [ -f \"\$PKGBUILD_PATH\" ]; then
                 echo \"Building package in \$dir\" && \
