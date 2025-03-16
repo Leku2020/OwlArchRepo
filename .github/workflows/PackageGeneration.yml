@@ -45,15 +45,15 @@ jobs:
           repository: Leku2020/OwlArchRepo
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 2 
-          
+      - name: Mark repository as safe
+        run: |
+          git config --global --add safe.directory /__w/OwlArchRepo/OwlArchRepo
       - name: Detect modified paths
         run: |
           ls -la
           git fetch origin main
           git diff --name-only origin/main...HEAD > modified_paths.txt
           cat modified_paths.txt
-
-
 
       - name: Download latest artifact
         id: download-artifact
