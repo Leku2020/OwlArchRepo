@@ -167,21 +167,34 @@ jobs:
           su - builder -c "
             export GITHUB_WORKSPACE=\\$GITHUB_WORKSPACE && \
             echo \"GITHUB_WORKSPACE is set to \$GITHUB_WORKSPACE\" && \
-            find \$GITHUB_WORKSPACE -type d -exec sh -c '
-              for dir do
-                PKGBUILD_PATH=\"\$dir/PKGBUILD\"
-                if [ -f \"\$PKGBUILD_PATH\" ]; then
-                  echo \"Building package in \$dir\" && \
-                  cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && \
-                  { [ -d src ] && rm -r src || echo \"Directory 'src' does not exist, skipping removal.\"; } && \
-                  { [ -d pkg ] && rm -r pkg || echo \"Directory 'pkg' does not exist, skipping removal.\"; } && \
-                  mv *.pkg.tar.* \$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/ && \
-                  cd -
-                else
-                  echo \"No PKGBUILD found in \$dir, skipping.\"
-                fi
-              done
-            ' sh {} +
+            ls \$GITHUB_WORKSPACE && \
+            cat $GITHUB_WORKSPACE/modified_dirs.txt | while read package_name; do
+              # Limpiar espacios en blanco alrededor del nombre del paquete
+              package_name=\$(echo \"\$package_name\" | xargs)
+
+              # Buscar recursivamente el directorio que contenga el nombre del paquete
+              found_dirs=(\$(find \"\$GITHUB_WORKSPACE\" -type d -name \"\$package_name\"))
+
+              if [ \${#found_dirs[@]} -eq 0 ]; then
+                echo \"No directory found for package: \$package_name, skipping.\"
+                continue
+              elif [ \${#found_dirs[@]} -gt 1 ]; then
+                echo \"Multiple directories found for package: \$package_name, skipping.\"
+                continue
+              fi
+              dir=\"\${found_dirs[0]}\"
+              PKGBUILD_PATH=\"\$GITHUB_WORKSPACE/\$dir/PKGBUILD\"
+              if [ -f \"\$PKGBUILD_PATH\" ]; then
+                echo \"Building package in \$dir\" && \
+                cd \"\$dir\" && makepkg -s --noconfirm --skippgpcheck && \
+                { [ -d src ] && rm -r src || echo \"Directory 'src' does not exist, skipping removal.\"; } && \
+                { [ -d pkg ] && rm -r pkg || echo \"Directory 'pkg' does not exist, skipping removal.\"; } && \
+                mv *.pkg.tar.* \$GITHUB_WORKSPACE/output_dir/pkgs/x86_64/ && \
+                cd -
+              else
+                echo \"No PKGBUILD found in \$dir, skipping.\"
+              fi
+            done
           "
 
       - name: Clean up repository database
