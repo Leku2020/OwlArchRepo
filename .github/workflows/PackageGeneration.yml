@@ -183,6 +183,7 @@ jobs:
                 continue
               fi
               dir=\"\${found_dirs[0]}\"
+              ls $dir
               PKGBUILD_PATH=\"\$GITHUB_WORKSPACE/\$dir/PKGBUILD\"
               if [ -f \"\$PKGBUILD_PATH\" ]; then
                 echo \"Building package in \$dir\" && \
