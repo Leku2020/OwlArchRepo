@@ -50,7 +50,28 @@ jobs:
                   core.setOutput('artifact_id', '');
                   core.setOutput('artifact_name', '');
                 }
-                  
+
+          - name: Download artifact if exists
+            if: steps.download-artifact.outputs.artifact_id != ''
+            uses: actions/download-artifact@v4
+            with:
+              name: ${{ steps.download-artifact.outputs.artifact_name }}
+              path: ${{ github.workspace }}/downloaded-artifact
+          
+          - name: Fallback if no artifact exists
+            if: steps.download-artifact.outputs.artifact_id == ''
+            run: |
+              echo "No matching artifact found. Skipping download."      
+              
+          - name: Download Pages
+            uses: actions/download-artifact@v4
+            with:
+              name: ${{ github.event.inputs.PageName }}
+              github-token: ${{ secrets.GITHUB_TOKEN }}
+              path: pages
+              repository: ${{ github.repository }}
+              run-id: ${{ github.event.inputs.PagePipelineID }}
+
           - name: Install Dependencies
             run: |
               cd pages
