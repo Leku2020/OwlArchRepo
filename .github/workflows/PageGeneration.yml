@@ -41,7 +41,7 @@ jobs:
                 const matchingArtifacts = artifacts.data.artifacts
                   .filter(artifact => artifact.name.startsWith('package_artifact-'))
                   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-          
+                console.log("Matching artifacts:", matchingArtifacts);
                 if (matchingArtifacts.length > 0) {
                   const latestArtifact = matchingArtifacts[0];
                   core.setOutput('artifact_id', latestArtifact.id);
@@ -62,7 +62,7 @@ jobs:
             if: steps.download-artifact.outputs.artifact_id == ''
             run: |
               echo "No matching artifact found. Skipping download."      
-              
+
           - name: Download Pages
             uses: actions/download-artifact@v4
             with:
