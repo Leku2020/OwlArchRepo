@@ -33,6 +33,18 @@ package() {
   cd ${srcdir}/${pkgname}
   make DESTDIR="${pkgdir}" install
   pwd
+  # Create the restricted directory for debugging tools
+  install -d "${pkgdir}/usr/bin/tools/debugging"
+
+  # Move all executables from /usr/bin to /usr/bin/tools/debugging
+  if [[ -d "${pkgdir}/usr/bin" ]]; then
+    mv "${pkgdir}/usr/bin/"* "${pkgdir}/usr/bin/tools/debugging/"
+    rmdir "${pkgdir}/usr/bin"
+  fi
+
+  # Set ownership to root and a specific group
+  chown -R root:debugGroup "${pkgdir}/usr/bin/tools/debugging"
+  
   find -name LICENSE.TXT
   install -d -m755 ${pkgdir}/usr/share/licenses/capstone-git
   install LICENSES/LICENSE.TXT ${pkgdir}/usr/share/licenses/capstone-git/LICENSE.TXT
