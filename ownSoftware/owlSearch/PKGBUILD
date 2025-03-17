@@ -29,7 +29,7 @@ prepare() {
 package() {
     #pip install argparse configparser os requests sys json datetime
     # Instalar el script principal como ejecutable
-    install -Dm755 "$srcdir/owlSearch.py" "$pkgdir/usr/bin/tools/osint/owlSearch"
+    install -Dm755 "$srcdir/owlSearch.py" "$pkgdir/usr/bin/owlSearch"
 
     # Crear directorio para los archivos de configuración
     install -d "$pkgdir/usr/share/owlSearch"
