@@ -72,6 +72,9 @@ Below is a list of packages available in this repository:
 18. **[OwlSearch](owlsearch)**  
     Network security monitoring tool for traffic analysis and anomaly detection.
 
+19. **[OpenVPN](openvpn)**
+    Open software virtual private network, used to establish secure encripted connections between the machine and remote-host.
+
 ## Installation
 
 To install packages from this repository on your OwlArch system, follow these steps:
