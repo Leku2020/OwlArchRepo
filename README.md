@@ -46,7 +46,9 @@ Below is a list of packages available in this repository:
     GUI-based network protocol analyzer.
 17. **[Zeek](https://leku2020.github.io/OwlArchRepo/zeek)**  
     Network security monitoring tool for traffic analysis and anomaly detection.
-18. **[OpenVPN](https://leku2020.github.io/OwlArchRepo/openvpn)**  
+18. **[OwlSearch](https://leku2020.github.io/OwlArchRepo/owlsearch)**  
+    Network security monitoring tool for traffic analysis and anomaly detection.
+19. **[OpenVPN](https://leku2020.github.io/OwlArchRepo/openvpn)**  
     Open software virtual private network, used to establish secure encripted connections between the machine and remote-host.
 
 ## Installation
