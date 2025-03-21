@@ -1,7 +1,7 @@
 ---
 layout: software
-title: Brave
-permalink: /brave
+title: OpenVPN
+permalink: /openvpn
 ---
 
 [🔙 Go back home](/OwlArchRepo/)
