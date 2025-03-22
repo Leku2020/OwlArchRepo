@@ -1,99 +1,87 @@
 ---
 layout: software
-title: OpenVPN
-permalink: /openvpn
+title: ProxyChains
+permalink: /proxychains
 ---
 
 [🔙 Go back home](/OwlArchRepo/)
 
-# Open VPN
+# ProxyChains-NG
 
 ## Introduction
-OpenVPN is a free and open-source virtual private network software. It is designed to establish encrypted connections between devices over the internet, ensuring privacy and data protection while accessing remote networks.
-It is an SSL VPN that implements OSI layer 2 and 3 secure network extension, with the up to industry standard SSL/TLS protocol.
+ProxyChains-NG is a tool that forces network connections to go through a chain of proxies for anonymity and security. It supports SOCKS and HTTP proxies, allowing users to mask their IP and bypass restrictions.
 
 ## Features
 
-- **SSL/TLS**: Enables secure protocol connections.
-- **Privacy Protection**: Shields your connection activity.
-- **Commertial/Private VPN**: Allows the use of custom or commertial VPN configurations.
-- **Security**: Easily accessible security for end users.
+- *Proxy chaining*: Routes traffic through multiple proxies for enhanced anonymity.
+- *Support for SOCKS4, SOCKS5, and HTTP proxies*: Allows various types of proxy protocols.
+- *Flexible configuration*: Enables dynamic, strict, or random proxy chains based on user preference.
 
 ## Installation
 
 1. Open a terminal.
-2. Install OpenVPN using the following command:
+2. Install proxychains-ng using the following command:
 
    ```sh
-   sudo pacman -S openvpn
+   sudo pacman -S proxychains-ng
    ```
-
-### Install verification
-To verify that OpenVPN has been installed successfully, run:
-
-   ```sh
-   openvpn --version
-   ```
-
-If the version number is displayed, the installation was successful.
 
 ### Uninstall
 To remove OpenVPN from your system, use:
 
    ```sh
-   sudo pacman -Rns openvpn
+   sudo pacman -R proxychains-ng
    ```
 
 ## Usage
 
-After installation, a configuration file needs to be established to conenct to either a commertial VPN server or a private server. This configuration file needs to be downloaded and stored in a dedicated folder, such as:
+After installation, a configuration file needs to be established. This is done to set the proxy list and the proxy type that will be used by proxychains. Open the config file with:
 
    ```sh
-   mkdir -p ~/openvpn-configs
-   cp /path/to/downloaded/config.ovpn ~/openvpn-configs/
+   sudo nano /etc/proxychains.conf
 
    ```
 
-Once stored, the file needs to be set as the openvpn config with the following command:
+Add the proxy at the bottom of the file, for example, for a SOCKS5 proxy, add:
   
    ```sh
-   sudo openvpn --config ~/openvpn-configs/config.ovpn
+   `socks5 127.0.0.1 9050`
 
    ```
-Once set, a prompt that requires user credentials will be required. Enter the corresponding credentials.
-The log will show in the messages in console, and if successful, you will be connected to the VPN! Verify it using the following command:
+Once set, choose a proxy set type from the available options explained below:
+   - **Strict Chain**: Uses proxies in the exact order you set them.  
+   - **Dynamic Chain**: Tries proxies in order but skips failed ones.  
+   - **Random Chain**: Selects proxies randomly from the list.
+
+Press `Ctrl + O` to save and `Ctrl + X` to exit the editor
+
+Now, to use it, test the following command:
   
    ```sh
-   curl ifconfig.me
+   `proxychains firefox`
 
    ```
 
-To deactivate the VPN connection, use the following command:
-  
-   ```sh
-   sudo killall openvpn
-
-   ```
-
-OpenVPN even allows users to customize a systemctl service configuration to make openvpn automatically startup and connect at boot, giving them flexibility and easy of access in the future, however it is not implemented by default as each user needs to enter their own configuration file and credentials.
+Now that this is configured, traffic will be redirected through these proxy chains, increasing privacy and security in our searches!
 
 ## Official documentation & More Info
-- [OpenVPN official website](https://openvpn.net/)
-- [Brave GitHub Repository](https://github.com/openvpn)
-- [OpenVPN Community Support](https://community.openvpn.net/openvpn)
+- [ProxyChains-NG official website](https://openvpn.net/)
+- [ProxyChains-NG GitHub Repository](https://github.com/rofl0r/proxychains-ng)
+- [ProxyChains-NG Cummunity](https://github.com/rofl0r/proxychains-ng)
+- [ProxyChains-NG Wiki](https://github.com/rofl0r/proxychains-ng/wiki)
 
 ## Contributing
-If you want to contribute to OpenVPN, please visit the [contributing guide](https://community.openvpn.net/openvpn/wiki/Contributing).
+If you want to contribute to ProxyChains-NG, please visit the [contributing guide](https://github.com/rofl0r/proxychains-ng/blob/master/CONTRIBUTING.md).
 
 ## Support
-For support and troubleshooting, visit the [OpenVPN Support](https://support.openvpn.com/hc/en-us).
+For support and troubleshooting, visit the [ProxyChains-NG support](https://github.com/rofl0r/proxychains-ng/wiki).
 
 ## License
-OpenVPN is released under the [GPL license version 2](https://openvpn.net/License/).
+ProxyChains is released under the [GPL-3.0 License](https://opensource.org/licenses/GPL-3.0).
 
 ---
 
 <div style="display: flex; justify-content: space-between;">
   <a href="owlsearch">🔙 OwlSearch</a>
-  <a href="capstone">🔜 Capstone</a>
+  <a href="openvpn">🔜 OpenVpn</a>
 </div>
