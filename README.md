@@ -50,6 +50,8 @@ Below is a list of packages available in this repository:
     Network security monitoring tool for traffic analysis and anomaly detection.
 19. **[OpenVPN](https://leku2020.github.io/OwlArchRepo/openvpn)**  
     Open software virtual private network, used to establish secure encripted connections between the machine and remote-host.
+20. **[ProxyChains-ng](https://leku2020.github.io/OwlArchRepo/proxychains)**
+Tool that forces network connections to go through a chain of proxies for anonymity and security.
 
 ## Installation
 
