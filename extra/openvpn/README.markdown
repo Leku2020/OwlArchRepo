@@ -79,7 +79,7 @@ OpenVPN even allows users to customize a systemctl service configuration to make
 
 ## Official documentation & More Info
 - [OpenVPN official website](https://openvpn.net/)
-- [Brave GitHub Repository](https://github.com/openvpn)
+- [OpenVPN GitHub Repository](https://github.com/openvpn)
 - [OpenVPN Community Support](https://community.openvpn.net/openvpn)
 
 ## Contributing
