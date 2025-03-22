@@ -75,6 +75,9 @@ Below is a list of packages available in this repository:
 19. **[OpenVPN](openvpn)**
     Open software virtual private network, used to establish secure encripted connections between the machine and remote-host.
 
+20. **[ProxyChains-ng](proxychains)**
+    Tool that forces network connections to go through a chain of proxies for anonymity and security.
+
 ## Installation
 
 To install packages from this repository on your OwlArch system, follow these steps:
