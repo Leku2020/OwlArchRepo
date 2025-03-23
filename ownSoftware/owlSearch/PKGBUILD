@@ -24,7 +24,6 @@ prepare() {
     mv "$srcdir/config.ini.actual" "$srcdir/config.ini"
 }
 
-
 # Función de empaquetado
 package() {
     #pip install argparse configparser os requests sys json datetime
