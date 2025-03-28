@@ -13,7 +13,7 @@ Packages in this repository are regularly updated and included in the official O
 Below is a list of packages available in this repository:
 
 1. **[Brave](https://leku2020.github.io/OwlArchRepo/brave)**  
-   Privacy-focused web browser.
+   A privacy-focused web browser.
 2. **[Capstone](https://leku2020.github.io/OwlArchRepo/capstone)**  
    Disassembly and reverse engineering framework.
 3. **[Frida](https://leku2020.github.io/OwlArchRepo/frida)**  
@@ -67,4 +67,4 @@ To install packages from this repository on your OwlArch system, follow these st
    ```
 
 ## Distribution
-This repository is intended for use with the OwlArch distribution. The source code of the machine can be found [here](https://github.com/Leku2020/OwlArch) and machine documentation can be found [here](https://leku2020.github.io/OwlArch).
+This repository is intended for use with the OwlArch distribution. The source code of the machine can be found [here](https://github.com/Leku2020/OwlArch) and the machine documentation can be found [here](https://leku2020.github.io/OwlArch).
